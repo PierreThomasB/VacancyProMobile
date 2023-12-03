@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.project.vacancypromobile.datas.UserRepository
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @AndroidEntryPoint
