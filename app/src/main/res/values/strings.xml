@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">vacancypromobile</string>
+    <string name="login_register_button">S\'enregistrer</string>
+    <string name="login_login_button">Se connecter</string>
+    <string name="login_password">Mot de passe</string>
+    <string name="login_email">Email</string>
 </resources>
