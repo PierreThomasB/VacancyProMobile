@@ -3,8 +3,6 @@ package com.project.vacancypromobile.datas
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.project.vacancypromobile.datas.UserRepository.Singleton.currentUser
-import com.project.vacancypromobile.datas.UserRepository.Singleton.users
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.ApiService
 import com.project.vacancypromobile.utils.TokenManager
@@ -15,10 +13,11 @@ import java.io.Serializable
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(val tokenManager: TokenManager, val apiService: ApiService) : Serializable {
-    object Singleton {
-        val users = arrayListOf<User>()
-        var currentUser: User? = null
-    }
+    private val users = arrayListOf<User>()
+    private var currentUser: User? = null
+
+    fun getUsers() = users
+    fun getCurrentUser() = currentUser
 
 
     fun loadUsers() {
@@ -33,13 +32,12 @@ class UserRepository @Inject constructor(val tokenManager: TokenManager, val api
         }
     }
 
-    suspend fun loadUser(): String? {
+    suspend fun loadUser() {
         val token = tokenManager.getToken().first()
-        /*if (token != null) {
+        if (token != null) {
             val response = apiService.FetchUser(token)
             if (response.isSuccessful) currentUser = response.body()
-        }*/
-        return token
+        }
     }
 
     suspend fun signIn(email: String, password: String): Boolean {
