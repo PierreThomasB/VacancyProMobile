@@ -36,8 +36,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             navController = rememberNavController()
             SetupNavGraph(navController = navController)
-            val user = mainViewModel.loadUser()
-            if (user == null) redirectToLogin() else redirectToHome()
+            /*val user = mainViewModel.loadUser()
+            if (user == null) redirectToLogin() else redirectToHome()*/
+            redirectToLogin()
             VacancypromobileTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.project.vacancypromobile.Greeting
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.LoginViewModel
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +64,7 @@ fun LoginScreen(
                         },
                         leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = null)}
                     )
-                    OutlinedButton(onClick = { loginViewModel.logIn() }) {
+                    OutlinedButton(onClick = { runBlocking { loginViewModel.logIn() }  }) {
                         Text(text = "Se connecter")
                     }
                 }
