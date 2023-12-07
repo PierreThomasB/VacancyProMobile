@@ -4,4 +4,6 @@ sealed class Screen(val route: String) {
     object Home: Screen(route = "home_screen")
     object Login: Screen(route = "login_screen")
     object Register: Screen(route = "register_screen")
+
+    object CreatePeriod: Screen(route = "create_period_screen");
 }
