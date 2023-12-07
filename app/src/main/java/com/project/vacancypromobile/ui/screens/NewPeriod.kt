@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.NewPeriodViewModel
+import kotlinx.coroutines.runBlocking
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +60,9 @@ fun NewPeriodScreen(
 
                     FilledTonalButton(
                         onClick = {
-                            newPeriodViewModel.createPeriod()
+                            runBlocking {
+                                newPeriodViewModel.createPeriod()
+                            }
                         },
                         modifier = Modifier
                             .fillMaxWidth()
