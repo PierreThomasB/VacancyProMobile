@@ -6,11 +6,18 @@ import javax.inject.Inject
 
 class PeriodRepository @Inject constructor(private val apiService: ApiService) : Serializable{
 
-    fun createPeriod(name: String, description: String) {
-        apiService.createPeriod(name, description)
+
+
+
+
+    suspend fun createPeriod(request : PeriodRequest) {
+        val response  = apiService.createPeriod(request)
+        if(response.isSuccessful) {
+            println("Period created")
+        } else {
+            println("Period not created")
+        }
     }
-
-
 
 
 }

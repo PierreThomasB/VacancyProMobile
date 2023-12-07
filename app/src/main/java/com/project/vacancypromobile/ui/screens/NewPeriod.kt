@@ -59,7 +59,7 @@ fun NewPeriodScreen(
 
                     FilledTonalButton(
                         onClick = {
-                                  println("Hello")
+                            newPeriodViewModel.createPeriod()
                         },
                         modifier = Modifier
                             .fillMaxWidth()
