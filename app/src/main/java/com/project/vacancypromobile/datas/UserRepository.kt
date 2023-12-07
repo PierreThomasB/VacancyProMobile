@@ -1,10 +1,9 @@
 package com.project.vacancypromobile.datas
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.stringPreferencesKey
+import android.util.Log
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.ApiService
+import com.project.vacancypromobile.services.requests.LoginRequest
 import com.project.vacancypromobile.utils.TokenManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
@@ -35,18 +34,21 @@ class UserRepository @Inject constructor(val tokenManager: TokenManager, val api
     suspend fun loadUser() {
         val token = tokenManager.getToken().first()
         if (token != null) {
-            val response = apiService.FetchUser(token)
-            if (response.isSuccessful) currentUser = response.body()
+            val response = apiService.fetchUser("Bearer $token")
+            if (response.isSuccessful) {
+                currentUser = response.body()
+            }
         }
     }
 
-    suspend fun signIn(email: String, password: String): Boolean {
-        val response = apiService.SignIn(email, password)
+    suspend fun signIn(request: LoginRequest) {
+        val response = apiService.signIn(request)
         if(response.isSuccessful) {
             currentUser = response.body()
-            return true
+            Log.d("USER", response.body().toString())
+            tokenManager.saveToken(currentUser!!.token)
+
         }
-        return false
     }
 
     suspend fun signUp(lastname:String, firstname: String, email:String, password:String) {

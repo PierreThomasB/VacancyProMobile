@@ -12,8 +12,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "data_store")
@@ -21,12 +23,17 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "da
 @InstallIn(SingletonComponent::class)
 class VacancyProModule {
     private val BASE_URL = "https://porthos-intra.cg.helmo.be/e190476/"
-
+    //private val BASE_URL = "http://10.0.2.2:8000/"
+    private val client = OkHttpClient.Builder()
+        .connectTimeout(100, TimeUnit.SECONDS)
+        .readTimeout(100, TimeUnit.SECONDS)
+        .build()
     @Singleton
     @Provides
     fun provideApiService() : ApiService =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
