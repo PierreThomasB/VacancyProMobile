@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.project.vacancypromobile.datas.PeriodRepository
+import com.project.vacancypromobile.models.Period
 import javax.inject.Inject
 
 class NewPeriodViewModel @Inject constructor(private val periodRepository: PeriodRepository)  : ViewModel(){
@@ -23,7 +24,11 @@ class NewPeriodViewModel @Inject constructor(private val periodRepository: Perio
 
     suspend fun createPeriod() {
 
-          periodRepository.createPeriod(periodName, periodDescription);
+        val period = Period(
+            name = periodName,
+            description = periodDescription);
+
+          periodRepository.createPeriod(period);
     }
 
 }

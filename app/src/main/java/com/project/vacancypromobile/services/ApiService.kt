@@ -16,6 +16,6 @@ interface ApiService {
     fun signUp(lastname: String, firstname: String, email: String, password: String): Response<User>
 
     @POST("api/Period/CreatePeriod")
-     fun createPeriod(request : PeriodRequest) : Response<Period>
+     fun createPeriod(request : Period) : Response<Period>
 
 }
