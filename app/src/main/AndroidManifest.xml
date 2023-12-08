@@ -30,6 +30,11 @@
             android:exported="true"
             android:theme="@style/Theme.Vacancypromobile">
         </activity>
+        <activity
+            android:name=".NewPeriodActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Vacancypromobile">
+        </activity>
     </application>
 
 </manifest>

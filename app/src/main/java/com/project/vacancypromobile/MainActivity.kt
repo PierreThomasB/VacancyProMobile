@@ -2,7 +2,6 @@ package com.project.vacancypromobile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -15,16 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import androidx.viewbinding.ViewBinding
-import com.project.vacancypromobile.datas.UserRepository
-import com.project.vacancypromobile.ui.screens.Screen
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -55,7 +47,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun redirectToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, NewPeriodActivity::class.java)
         startActivity(intent)
         finish()
     }

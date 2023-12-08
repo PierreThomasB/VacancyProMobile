@@ -25,7 +25,7 @@ import kotlinx.coroutines.runBlocking
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewPeriodScreen(
-    newPeriodViewModel: NewPeriodViewModel = viewModel(),
+    newPeriodViewModel: NewPeriodViewModel =  viewModel()
 ) {
     VacancypromobileTheme {
         Surface(
@@ -61,7 +61,7 @@ fun NewPeriodScreen(
                     FilledTonalButton(
                         onClick = {
                             runBlocking {
-                                newPeriodViewModel.createPeriod()
+                               // newPeriodViewModel.createPeriod()
                             }
                         },
                         modifier = Modifier

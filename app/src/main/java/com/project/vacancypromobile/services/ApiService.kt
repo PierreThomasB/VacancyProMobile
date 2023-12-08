@@ -2,6 +2,7 @@ package com.project.vacancypromobile.services
 
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.User
+import com.project.vacancypromobile.services.requests.LoginRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,7 +20,7 @@ interface ApiService {
     suspend fun fetchUser(@Header("Autorization") token: String) : Response<User>
 
     @POST("api/Period/CreatePeriod")
-      suspend fun createPeriod(request : Period) : Response<Period>
+    suspend fun createPeriod(request : Period) : Response<Period>
     @POST("api/User/SignUp")
     suspend fun signUp(lastname: String, firstname: String, email: String, password: String): Response<User>
 }

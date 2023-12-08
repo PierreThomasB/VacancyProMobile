@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.project.vacancypromobile.datas.PeriodRepository
 import com.project.vacancypromobile.datas.UserRepository
 import com.project.vacancypromobile.services.ApiService
 import com.project.vacancypromobile.utils.TokenManager
@@ -30,7 +31,7 @@ class VacancyProModule {
         .build()
     @Singleton
     @Provides
-    fun provideApiService() : ApiService =
+    fun  provideApiService() : ApiService =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
@@ -46,4 +47,7 @@ class VacancyProModule {
     @Provides
     fun provideUserRepository(tokenManager: TokenManager, apiService: ApiService): UserRepository = UserRepository(tokenManager, apiService)
 
+    @Singleton
+    @Provides
+    fun providePeriodRepository(apiService: ApiService): PeriodRepository = PeriodRepository(apiService)
 }
