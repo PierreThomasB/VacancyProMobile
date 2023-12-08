@@ -10,7 +10,7 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-interface ApiService {
+public interface ApiService {
     @GET("api/User/ListUser")
     suspend fun List() : Response<List<User>>
     @POST("api/User/SignIn")
