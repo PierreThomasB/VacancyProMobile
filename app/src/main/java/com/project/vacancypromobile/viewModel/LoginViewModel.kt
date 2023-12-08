@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
-
     var email by mutableStateOf("")
     var password by mutableStateOf("")
     fun updateEmail(input: String) { email = input }
