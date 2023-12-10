@@ -4,6 +4,7 @@ import android.util.Log
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.ApiService
 import com.project.vacancypromobile.services.requests.LoginRequest
+import com.project.vacancypromobile.services.requests.RegisterRequest
 import com.project.vacancypromobile.utils.TokenManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
@@ -34,7 +35,7 @@ class UserRepository @Inject constructor(val tokenManager: TokenManager, val api
     suspend fun loadUser() {
         val token = tokenManager.getToken().first()
         if (token != null) {
-            val response = apiService.fetchUser("Bearer $token")
+            val response = apiService.fetchUser("Bearer: ${token}")
             if (response.isSuccessful) {
                 currentUser = response.body()
             }
@@ -47,11 +48,15 @@ class UserRepository @Inject constructor(val tokenManager: TokenManager, val api
             currentUser = response.body()
             Log.d("USER", response.body().toString())
             tokenManager.saveToken(currentUser!!.token)
-
         }
     }
 
-    suspend fun signUp(lastname:String, firstname: String, email:String, password:String) {
-        val response = apiService.signUp(lastname, firstname, email, password)
+    suspend fun signUp(request: RegisterRequest) {
+        val response = apiService.signUp(request)
+        if (response.isSuccessful) {
+            currentUser = response.body()
+            Log.d("USER", response.body().toString())
+            tokenManager.saveToken(currentUser!!.token)
+        }
     }
 }

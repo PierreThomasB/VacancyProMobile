@@ -2,6 +2,7 @@ package com.project.vacancypromobile.services
 
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.requests.LoginRequest
+import com.project.vacancypromobile.services.requests.RegisterRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,5 +19,5 @@ interface ApiService {
     @Headers("Content-Type: application/json;charset=UTF-8")
     suspend fun fetchUser(@Header("Autorization") token: String) : Response<User>
     @POST("api/User/SignUp")
-    suspend fun signUp(lastname: String, firstname: String, email: String, password: String): Response<User>
+    suspend fun signUp(@Body registerRequest: RegisterRequest): Response<User>
 }

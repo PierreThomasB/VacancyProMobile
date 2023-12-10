@@ -5,8 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.project.vacancypromobile.datas.UserRepository
 import com.project.vacancypromobile.services.requests.LoginRequest
+import com.project.vacancypromobile.ui.screens.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import javax.inject.Inject
@@ -20,7 +22,6 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
     suspend fun logIn() {
         val request = LoginRequest(email, password)
         userRepository.signIn(request)
-
 
     }
 }
