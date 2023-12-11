@@ -22,7 +22,7 @@ class TokenManager @Inject constructor(val context: Context) {
         context.dataStore.edit { pre -> pre[TOKEN_KEY] = token }
     }
 
-    suspend fun deleteToken(token: String) {
+    suspend fun deleteToken() {
         context.dataStore.edit { pre -> pre.remove(TOKEN_KEY) }
     }
 }

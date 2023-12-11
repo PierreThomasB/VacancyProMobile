@@ -27,6 +27,7 @@ fun SetupNavGraph(
         startDestination = Screen.Home.route
     ) {
         composable(route = Screen.Home.route){HomeScreen(homeViewModel , navController)}
+        composable(route = Screen.Home.route){HomeScreen(homeViewModel, navController)}
         composable(route = Screen.Login.route){LoginScreen(loginViewModel, navController)}
         composable(route = Screen.Register.route){RegisterScreen(registerViewModel, navController)}
         composable(route = Screen.CreatePeriod.route){ NewPeriodScreen(newPeriodViewModel, navController) }

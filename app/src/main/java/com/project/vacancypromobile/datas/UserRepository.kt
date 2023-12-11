@@ -33,12 +33,18 @@ class UserRepository @Inject constructor(val tokenManager: TokenManager, val api
     }
 
     suspend fun loadUser() {
-        val token = tokenManager.getToken().first()
+        /*val token = tokenManager.getToken().first()
         if (token != null) {
-            val response = apiService.fetchUser("Bearer: ${token}")
+            //val response = apiService.fetchUser("Bearer: $token")
+            val response = apiService.fetchUser()
             if (response.isSuccessful) {
                 currentUser = response.body()
             }
+        }*/
+        val response = apiService.fetchUser()
+        if(response.isSuccessful) {
+            currentUser = response.body()
+            tokenManager.saveToken(currentUser!!.token)
         }
     }
 
@@ -46,7 +52,6 @@ class UserRepository @Inject constructor(val tokenManager: TokenManager, val api
         val response = apiService.signIn(request)
         if(response.isSuccessful) {
             currentUser = response.body()
-            Log.d("USER", response.body().toString())
             tokenManager.saveToken(currentUser!!.token)
         }
     }

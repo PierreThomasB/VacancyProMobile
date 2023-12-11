@@ -7,6 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.project.vacancypromobile.datas.PeriodRepository
 import com.project.vacancypromobile.datas.UserRepository
 import com.project.vacancypromobile.services.ApiService
+import com.project.vacancypromobile.services.AuthInterceptor
 import com.project.vacancypromobile.utils.TokenManager
 import dagger.Module
 import dagger.Provides
@@ -17,6 +18,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import javax.inject.Singleton
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "data_store")
@@ -24,20 +26,26 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "da
 @InstallIn(SingletonComponent::class)
 class VacancyProModule {
     private val BASE_URL = "https://porthos-intra.cg.helmo.be/e190476/"
-    //private val BASE_URL = "http://10.0.2.2:8000/"
+    //private val BASE_URL = "http://10.0.2.2:5053/"
     private val client = OkHttpClient.Builder()
         .connectTimeout(100, TimeUnit.SECONDS)
         .readTimeout(100, TimeUnit.SECONDS)
         .build()
     @Singleton
     @Provides
-    fun  provideApiService() : ApiService =
-        Retrofit.Builder()
+    fun provideApiService (authInterceptor: AuthInterceptor) : ApiService {
+        val okHttpClient = OkHttpClient.Builder().addInterceptor(authInterceptor).build()
+        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
             .build()
             .create(ApiService::class.java)
+    }
+    @Singleton
+    @Provides
+    fun provideAuthInterceptor(tokenManager: TokenManager): AuthInterceptor = AuthInterceptor(tokenManager)
 
     @Singleton
     @Provides

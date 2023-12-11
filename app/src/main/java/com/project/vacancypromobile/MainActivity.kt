@@ -14,7 +14,6 @@ import androidx.navigation.compose.rememberNavController
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.project.vacancypromobile.ui.screens.Screen
-import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.HomeViewModel
 import com.project.vacancypromobile.viewModel.LoginViewModel
 import com.project.vacancypromobile.viewModel.MainViewModel
@@ -22,12 +21,12 @@ import com.project.vacancypromobile.viewModel.NewPeriodViewModel
 import com.project.vacancypromobile.viewModel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
     private val loginViewModel: LoginViewModel by viewModels()
     private val registerViewModel: RegisterViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     private val newPeriodViewModel: NewPeriodViewModel by viewModels()
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -37,29 +36,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-
-            Places.initialize(applicationContext, "apiKey")
-            placesClient = Places.createClient(this);
-
             navController = rememberNavController()
-            SetupNavGraph(navController = navController, loginViewModel, registerViewModel , newPeriodViewModel  , homeViewModel)
+            SetupNavGraph(
+                navController = navController,
+                loginViewModel = loginViewModel,
+                registerViewModel = registerViewModel,
+                homeViewModel =  homeViewModel
+            )
             mainViewModel.loadUser()
             val user = mainViewModel.getCurrentUser()
             if (user == null) navController.navigate(route = Screen.Login.route) else navController.navigate(route = Screen.Home.route)
         }
     }
-
-    private fun redirectToHome() {
-        TODO("Not yet implemented")
-    }
-
-    private fun redirectToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
 }
 
+/*
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
@@ -74,4 +65,4 @@ fun GreetingPreview() {
     VacancypromobileTheme {
         Greeting("Android")
     }
-}
+}*/
