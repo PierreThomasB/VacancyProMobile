@@ -7,17 +7,20 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
+import com.project.vacancypromobile.viewModel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHostController) {
+    homeViewModel.loadCurrentUser()
     VacancypromobileTheme {
         Scaffold(
             topBar = { CenterAlignedTopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -29,7 +32,7 @@ fun HomeScreen() {
             Column(
                 modifier = Modifier.padding(innerPadding),
             ) {
-
+                Text(text = homeViewModel.getUser().username)
             }
 
         }
@@ -39,5 +42,5 @@ fun HomeScreen() {
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(navController = rememberNavController())
 }

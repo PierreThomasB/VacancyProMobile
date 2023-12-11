@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.project.vacancypromobile.ui.screens.Screen
+import com.project.vacancypromobile.viewModel.HomeViewModel
 import com.project.vacancypromobile.viewModel.LoginViewModel
 import com.project.vacancypromobile.viewModel.MainViewModel
 import com.project.vacancypromobile.viewModel.RegisterViewModel
@@ -18,13 +19,19 @@ class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
     private val loginViewModel: LoginViewModel by viewModels()
     private val registerViewModel: RegisterViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var navController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             navController = rememberNavController()
-            SetupNavGraph(navController = navController, loginViewModel, registerViewModel)
+            SetupNavGraph(
+                navController = navController,
+                loginViewModel = loginViewModel,
+                registerViewModel = registerViewModel,
+                homeViewModel =  homeViewModel
+            )
             mainViewModel.loadUser()
             val user = mainViewModel.getCurrentUser()
             if (user == null) navController.navigate(route = Screen.Login.route) else navController.navigate(route = Screen.Home.route)
