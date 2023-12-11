@@ -50,4 +50,5 @@ class VacancyProModule {
     @Singleton
     @Provides
     fun providePeriodRepository(apiService: ApiService): PeriodRepository = PeriodRepository(apiService)
+
 }

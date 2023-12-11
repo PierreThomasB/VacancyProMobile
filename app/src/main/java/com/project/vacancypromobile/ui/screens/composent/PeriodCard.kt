@@ -22,7 +22,7 @@ import com.project.vacancypromobile.viewModel.PeriodViewModel
 
 
 @Composable
-fun PeriodCard(periodViewModel: PeriodViewModel){
+fun PeriodCard(periodViewModel: PeriodViewModel ){
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxWidth()
@@ -56,5 +56,5 @@ fun PeriodCard(periodViewModel: PeriodViewModel){
 @Composable
 @Preview
 fun LoginScreenPreview() {
-    PeriodCard(PeriodViewModel());
+    //PeriodCard(PeriodViewModel());
 }

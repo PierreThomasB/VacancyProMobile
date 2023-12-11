@@ -15,9 +15,22 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
     suspend fun createPeriod(request : Period) {
         val response  = apiService.createPeriod(request)
         if(response.isSuccessful && response.body() != null) {
+            _periods.add(request)
             Log.d("Period","Period created")
         } else {
             Log.d("Period","Period not created")
+        }
+    }
+
+
+    suspend fun getAllPeriod() : List<Period> {
+        val response = apiService.getAllPeriod()
+        if(response.isSuccessful && response.body() != null) {
+            _periods.addAll(response.body()!!)
+            return _periods
+        } else {
+            Log.d("Period","Period not found")
+            return emptyList()
         }
     }
 

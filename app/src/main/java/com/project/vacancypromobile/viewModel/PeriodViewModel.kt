@@ -1,14 +1,12 @@
 package com.project.vacancypromobile.viewModel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.project.vacancypromobile.models.Period
 
 
-class PeriodViewModel () : ViewModel() {
-    var nom by mutableStateOf("");
-    var description by mutableStateOf("");
+class PeriodViewModel constructor(period: Period) : ViewModel() {
+    val nom = period.name;
+    val description  = period.description;
 
 
 

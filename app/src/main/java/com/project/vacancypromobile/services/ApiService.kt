@@ -24,4 +24,7 @@ public interface ApiService {
     suspend fun createPeriod(request : Period) : Response<Period>
     @POST("api/User/SignUp")
     suspend fun signUp(@Body registerRequest: RegisterRequest): Response<User>
+
+    @GET("api/Period/ListPeriod")
+    suspend fun getAllPeriod() : Response<List<Period>>
 }
