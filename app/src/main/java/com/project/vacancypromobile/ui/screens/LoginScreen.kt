@@ -18,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.LoginViewModel
 import kotlinx.coroutines.runBlocking
@@ -25,7 +27,8 @@ import kotlinx.coroutines.runBlocking
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel = viewModel()
+    loginViewModel: LoginViewModel = viewModel(),
+    navController: NavHostController = rememberNavController()
 ) {
     VacancypromobileTheme {
         Surface(
@@ -57,10 +60,14 @@ fun LoginScreen(
                         },
                         leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = null)}
                     )
-                    OutlinedButton(onClick = { runBlocking {
+                    OutlinedButton(
+                        onClick = { runBlocking {
                         loginViewModel.logIn()
+                        navController.navigate(Screen.Home.route)
 
-                    }  }) {
+                    }
+
+                        }) {
                         Text(text = "Se connecter")
                     }
                 }
@@ -73,5 +80,5 @@ fun LoginScreen(
 @Composable
 @Preview
 fun LoginScreenPreview() {
-    LoginScreen()
+    //LoginScreen()
 }

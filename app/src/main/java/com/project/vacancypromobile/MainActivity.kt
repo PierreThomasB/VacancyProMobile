@@ -26,19 +26,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            navController = rememberNavController()
-            SetupNavGraph(navController = navController)
-            /*val user = mainViewModel.loadUser()
-            if (user == null) redirectToLogin() else redirectToHome()*/
-            redirectToLogin()
             VacancypromobileTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    SetupNavGraph(navController = rememberNavController())
                 }
             }
+
+            /*val user = mainViewModel.loadUser()
+            if (user == null) redirectToLogin() else redirectToHome()*/
+            redirectToLogin()
+
         }
     }
 
@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun redirectToLogin() {
-        val intent = Intent(this, NewPeriodActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }
