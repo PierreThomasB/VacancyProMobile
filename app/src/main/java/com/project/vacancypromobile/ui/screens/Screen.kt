@@ -6,4 +6,6 @@ sealed class Screen(val route: String) {
     object Register: Screen(route = "register_screen")
 
     object CreatePeriod: Screen(route = "create_period_screen");
+
+    object Period : Screen(route = "period_screen");
 }

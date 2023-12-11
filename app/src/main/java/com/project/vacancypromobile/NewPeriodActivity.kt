@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import com.project.vacancypromobile.ui.screens.NewPeriodScreen
 import com.project.vacancypromobile.viewModel.NewPeriodViewModel
 
 class NewPeriodActivity : ComponentActivity(){
@@ -15,7 +14,7 @@ class NewPeriodActivity : ComponentActivity(){
         super.onCreate(savedInstanceState)
 
         setContent {
-            NewPeriodScreen()
+            //NewPeriodScreen()
         }
     }
 

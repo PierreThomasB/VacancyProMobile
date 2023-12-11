@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.project.vacancypromobile.ui.screens.composent.DateRangeComp
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.NewPeriodViewModel
@@ -27,6 +29,7 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun NewPeriodScreen(
     newPeriodViewModel: NewPeriodViewModel = viewModel(),
+    navController: NavController
 ) {
 
 
@@ -71,6 +74,12 @@ fun NewPeriodScreen(
                     PlacesAutocompleteTextField( modifier = Modifier
                         .fillMaxWidth()
                         )
+                    if(newPeriodViewModel.periodStartDate != "" && newPeriodViewModel.periodEndDate != "") {
+                        Text(
+                            text = "Date sélectionnée : " + newPeriodViewModel.periodStartDate + " -> " + newPeriodViewModel.periodEndDate,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
                     DateRangeComp( modifier = Modifier
                         .fillMaxWidth() , selectStartDate = newPeriodViewModel::updatePeriodStartDate , selectEndDate = newPeriodViewModel::updatePeriodEndDate
                     )
@@ -83,6 +92,8 @@ fun NewPeriodScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)
+
+
                     ) {
                         Text("Create Period")
                     }
@@ -95,5 +106,5 @@ fun NewPeriodScreen(
 @Composable
 @Preview
 fun NewPeriodScreenPreview() {
-    NewPeriodScreen()
+    NewPeriodScreen(navController = rememberNavController() )
 }

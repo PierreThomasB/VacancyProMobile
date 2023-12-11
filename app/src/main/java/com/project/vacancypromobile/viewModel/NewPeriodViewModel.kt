@@ -14,8 +14,8 @@ class NewPeriodViewModel @Inject constructor()   : ViewModel(){
 
     var periodName by mutableStateOf("")
     var periodDescription by mutableStateOf("")
-    private var periodStartDate by mutableStateOf<Any>("")
-    private var periodEndDate by mutableStateOf<Any>("")
+     var periodStartDate by mutableStateOf<String>("")
+     var periodEndDate by mutableStateOf<String>("")
     private var periodPlace by mutableStateOf("")
 
     fun updatePeriodName(periodName: String) {
@@ -26,11 +26,13 @@ class NewPeriodViewModel @Inject constructor()   : ViewModel(){
         this.periodDescription = periodDescription
     }
 
-    fun updatePeriodStartDate(periodStartDate: Any) {
+    fun updatePeriodStartDate(periodStartDate: String) {
+        Log.d("Testing ", periodStartDate)
         this.periodStartDate = periodStartDate
     }
 
-    fun updatePeriodEndDate(periodEndDate: Any) {
+    fun updatePeriodEndDate(periodEndDate: String) {
+        Log.d("Testing ", periodEndDate)
         this.periodEndDate = periodEndDate
     }
 

@@ -18,14 +18,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
     fun DateRangeComp(
         modifier: Modifier = Modifier,
-        selectStartDate: (Long) -> Unit = {},
-        selectEndDate: (Long) -> Unit = {},
+        selectStartDate: (String) -> Unit = {},
+        selectEndDate: (String) -> Unit = {},
     ) {
         val calendar = Calendar.getInstance()
         calendar.set(2023, 11, 6) // year, month, date
@@ -57,11 +59,17 @@ import androidx.compose.ui.unit.dp
                 },
                 confirmButton = {
                     TextButton(onClick = {
+
                         showDateRangePicker = false
-                        startDate = dateRangePickerState.selectedStartDateMillis!!
-                        endDate = dateRangePickerState.selectedEndDateMillis!!
-                        selectStartDate(startDate)
-                        selectEndDate(endDate)
+                        val startDateTemp = dateRangePickerState.selectedStartDateMillis!!
+                        val endDateTemp = dateRangePickerState.selectedEndDateMillis!!
+
+                        val dateDebut = convertDate(startDateTemp)
+                        val dateFin = convertDate(endDateTemp)
+
+                        selectEndDate(dateDebut);
+                        selectStartDate(dateFin);
+
                     }) {
                         Text(text = "Confirm")
                     }
@@ -76,7 +84,7 @@ import androidx.compose.ui.unit.dp
             ) {
                 DateRangePicker(
                     state = dateRangePickerState,
-                    modifier = Modifier.height(height = 500.dp) // if I don't set this, dialog's buttons are not appearing
+                    modifier = Modifier.height(height = 500.dp) ,
                 )
             }
         }
@@ -90,6 +98,14 @@ import androidx.compose.ui.unit.dp
             Text(text = "Ajouter une période")
         }
     }
+
+
+fun convertDate(dateInMillis: Long): String {
+    val formatter = SimpleDateFormat("dd/MM/yyyy");
+    val calendar = Calendar.getInstance();
+    calendar.timeInMillis = dateInMillis;
+    return (formatter.format(Date(calendar.timeInMillis)));
+}
 
 
 @Composable
