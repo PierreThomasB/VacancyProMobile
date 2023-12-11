@@ -1,7 +1,6 @@
 package com.project.vacancypromobile.services
 
 import com.project.vacancypromobile.models.Period
-import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.requests.LoginRequest
 import com.project.vacancypromobile.services.requests.RegisterRequest
