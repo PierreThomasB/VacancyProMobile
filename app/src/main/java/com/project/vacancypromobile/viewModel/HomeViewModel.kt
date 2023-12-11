@@ -9,6 +9,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val userRepository: UserRepository): ViewModel() {
     private var user: User? = null
+
     fun loadCurrentUser() {
         user = userRepository.getCurrentUser()
     }
