@@ -17,7 +17,7 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            LoginScreen()
+            //LoginScreen(/*viewModel*/)
         }
 
 
