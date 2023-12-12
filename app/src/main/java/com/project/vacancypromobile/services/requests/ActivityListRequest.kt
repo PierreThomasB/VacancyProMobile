@@ -1,9 +1,9 @@
-package com.project.vacancypromobile.models
+package com.project.vacancypromobile.services.requests
 
 import com.google.gson.annotations.SerializedName
-import java.util.Date
+import com.project.vacancypromobile.models.Place
 
-data class Period (
+data class ActivityListRequest (
     @SerializedName("id")
     val id: Int = 0,
     @SerializedName("name")
@@ -11,11 +11,10 @@ data class Period (
     @SerializedName("description")
     val description: String = "",
     @SerializedName("beginDate")
-    val beginDate : Date,
+    val beginDate : String = "",
     @SerializedName("endDate")
-    val endDate : Date,
+    val endDate : String  = "",
     @SerializedName("place")
     val place : Place,
-    @SerializedName("activities")
-    val activities: List<Activity>
+
 )
