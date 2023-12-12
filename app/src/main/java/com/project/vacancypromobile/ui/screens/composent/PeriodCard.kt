@@ -83,5 +83,5 @@ fun PeriodCard(periodViewModel: PeriodViewModel  , onClick: () -> Unit){
 @Composable
 @Preview
 fun LoginScreenPreview() {
-    PeriodCard( onClick =  ({}) , periodViewModel = PeriodViewModel(Period(-1 , name = "Ludwig", description = "Salut " , beginDate = Date() , endDate = Date() , Place(id= "-1" , name = "Salut", urlPhoto = "AWU5eFiPT2gyC49KbvhLd7QvNW9aRTZNhciegQsbu0B6A4Ybiu_o_CODKq4rcYeSdAJCxSYk-j74yLa6ck8JL3OzrbMibzERPJ1j1xNhMdu2UG7M2_GuzieoPuyEItExKE-wDSsg0VVSfsHuY1Zho2piZgu-l-qJEuSIBi6hitY0GBCn7BHm" ))));
+    PeriodCard( onClick =  ({}) , periodViewModel = PeriodViewModel(Period(-1 , name = "Ludwig", description = "Salut " , beginDate = Date() , endDate = Date() , Place(id= "-1" , name = "Salut", urlPhoto = "AWU5eFiPT2gyC49KbvhLd7QvNW9aRTZNhciegQsbu0B6A4Ybiu_o_CODKq4rcYeSdAJCxSYk-j74yLa6ck8JL3OzrbMibzERPJ1j1xNhMdu2UG7M2_GuzieoPuyEItExKE-wDSsg0VVSfsHuY1Zho2piZgu-l-qJEuSIBi6hitY0GBCn7BHm" ) , emptyList())))
 }

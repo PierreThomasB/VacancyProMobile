@@ -7,11 +7,13 @@ import androidx.navigation.compose.composable
 import com.project.vacancypromobile.ui.screens.HomeScreen
 import com.project.vacancypromobile.ui.screens.LoginScreen
 import com.project.vacancypromobile.ui.screens.NewPeriodScreen
+import com.project.vacancypromobile.ui.screens.PeriodDetailsScreen
 import com.project.vacancypromobile.ui.screens.RegisterScreen
 import com.project.vacancypromobile.ui.screens.Screen
 import com.project.vacancypromobile.viewModel.HomeViewModel
 import com.project.vacancypromobile.viewModel.LoginViewModel
 import com.project.vacancypromobile.viewModel.NewPeriodViewModel
+import com.project.vacancypromobile.viewModel.PeriodDetailViewModel
 import com.project.vacancypromobile.viewModel.RegisterViewModel
 
 @Composable
@@ -20,7 +22,8 @@ fun SetupNavGraph(
     loginViewModel: LoginViewModel,
     registerViewModel: RegisterViewModel,
     newPeriodViewModel: NewPeriodViewModel,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    periodDetailViewModel: PeriodDetailViewModel
 ) {
     NavHost(
         navController = navController,
@@ -31,6 +34,7 @@ fun SetupNavGraph(
         composable(route = Screen.Register.route){RegisterScreen(registerViewModel, navController)}
         composable(route = Screen.CreatePeriod.route){ NewPeriodScreen(newPeriodViewModel, navController) }
         composable(route = Screen.Period.route){ NewPeriodScreen(newPeriodViewModel, navController) }
+        composable(route = Screen.PeriodDetails.route){ PeriodDetailsScreen(periodDetailViewModel , navController) }
 
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.project.vacancypromobile.datas.ActivityRepository
 import com.project.vacancypromobile.datas.PeriodRepository
 import com.project.vacancypromobile.datas.UserRepository
 import com.project.vacancypromobile.services.ApiService
@@ -18,7 +19,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 import javax.inject.Singleton
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "data_store")
@@ -58,5 +58,9 @@ class VacancyProModule {
     @Singleton
     @Provides
     fun providePeriodRepository(apiService: ApiService): PeriodRepository = PeriodRepository(apiService)
+
+    @Singleton
+    @Provides
+    fun provideActivityRepository(apiService: ApiService): ActivityRepository = ActivityRepository(apiService)
 
 }
