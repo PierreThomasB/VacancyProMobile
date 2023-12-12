@@ -29,7 +29,7 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
         if (response.isSuccessful && response.body() != null) {
             val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
             response.body()?.forEach {
-                _periods.add(Period(it.id, it.name, it.description, format.parse(it.beginDate),  format.parse(it.endDate) , it.place));
+                _periods.add(Period(it.id, it.name, it.description, format.parse(it.beginDate),  format.parse(it.endDate) , it.place ,emptyList()));
             }
             Log.d("Period", "Periods found");
             return _periods;
