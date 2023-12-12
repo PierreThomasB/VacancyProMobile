@@ -16,13 +16,13 @@ interface ApiService {
     suspend fun List() : Response<List<User>>
     @POST("api/User/SignIn")
     suspend fun signIn(@Body loginRequest: LoginRequest) : Response<User>
-    /*@GET("api/User")
+    @GET("api/User")
     @Headers("Content-Type: application/json;charset=UTF-8")
     suspend fun fetchUser(@Header("Autorization") token: String) : Response<User>
 
     @POST("api/Period/CreatePeriod")
     suspend fun createPeriod(request : Period) : Response<Period>
-    suspend fun fetchUser(@Header("Autorization") token: String) : Response<User>*/
+   // suspend fun fetchUser(@Header("Autorization") token: String) : Response<User>
     @GET("api/User")
     suspend fun fetchUser() : Response<User>
     @POST("api/User/SignUp")
