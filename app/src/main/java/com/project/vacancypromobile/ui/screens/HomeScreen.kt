@@ -27,9 +27,11 @@ import kotlinx.coroutines.runBlocking
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
-fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHostController) {
+fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHostController = rememberNavController()) {
     homeViewModel.loadCurrentUser()
-    runBlocking { homeViewModel.getPeriods() }
+    if(homeViewModel.getUser().username != null) {
+        runBlocking { homeViewModel.getPeriods() }
+    }
     VacancypromobileTheme {
         Scaffold(
             topBar = {
@@ -74,5 +76,5 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
+    HomeScreen()
 }

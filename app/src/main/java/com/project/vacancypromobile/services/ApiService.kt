@@ -28,7 +28,7 @@ interface ApiService {
     @POST("api/User/SignUp")
     suspend fun signUp(@Body registerRequest: RegisterRequest): Response<User>
 
-    @GET("api/Period/ListPeriod")
+    @GET("api/Period/PeriodByUser")
     suspend fun getAllPeriod() : Response<List<Period>>
 
 
