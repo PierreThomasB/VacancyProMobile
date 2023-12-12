@@ -54,7 +54,8 @@ class NewPeriodViewModel @Inject constructor()   : ViewModel(){
             description = periodDescription,
             beginDate = Date(),
             endDate = Date(),
-            place = Place("null","null","null")
+            place = Place("null","null","null"),
+            activities = emptyList()
 
         );
         //periodRepository.createPeriod(period);
