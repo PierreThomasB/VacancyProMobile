@@ -1,5 +1,7 @@
 package com.project.vacancypromobile.ui.screens
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,8 +27,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,6 +42,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.LoginViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,6 +51,7 @@ fun LoginScreen (
     loginViewModel: LoginViewModel = viewModel(),
     navController: NavController
 ) {
+    val context = LocalContext.current
     VacancypromobileTheme {
         Scaffold(
             topBar = { CenterAlignedTopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -90,13 +98,8 @@ fun LoginScreen (
                     )
                     OutlinedButton(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 10.dp),onClick = { login(loginViewModel, navController) }) {
+                        .padding(top = 10.dp),onClick = { login(context, loginViewModel, navController) }) {
                         Text(text = "Se connecter")
-                    }
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                        TextButton(onClick = { navController.navigate(route = Screen.Register.route) }) {
-                            Text(text = "Créer un compte")
-                        }
                     }
                     Divider()
                 }
@@ -106,13 +109,16 @@ fun LoginScreen (
     }
 }
 
-fun login(loginViewModel: LoginViewModel, navController: NavController) {
+fun login(context: Context, loginViewModel: LoginViewModel, navController: NavController) {
     runBlocking { loginViewModel.logIn() }
-    navController.navigate(route = Screen.Home.route) {
-        popUpTo(navController.graph.id) {
-            inclusive = true
+    if (loginViewModel.loginSuccess) {
+        navController.navigate(route = Screen.Home.route) {
+            popUpTo(navController.graph.id) {
+                inclusive = true
+            }
         }
-    }
+    } else Toast.makeText(context, "Données invalides", Toast.LENGTH_LONG).show()
+
 }
 
 @Composable

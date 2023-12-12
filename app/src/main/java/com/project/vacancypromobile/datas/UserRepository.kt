@@ -48,12 +48,13 @@ class UserRepository @Inject constructor(val tokenManager: TokenManager, val api
         }
     }
 
-    suspend fun signIn(request: LoginRequest) {
+    suspend fun signIn(request: LoginRequest): Boolean {
         val response = apiService.signIn(request)
         if(response.isSuccessful) {
             currentUser = response.body()
             tokenManager.saveToken(currentUser!!.token)
         }
+        return response.isSuccessful
     }
 
     suspend fun signUp(request: RegisterRequest) {
