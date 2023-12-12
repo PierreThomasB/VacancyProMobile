@@ -1,9 +1,9 @@
-package com.project.vacancypromobile.models
+package com.project.vacancypromobile.services.requests
 
 import com.google.gson.annotations.SerializedName
-import java.util.Date
+import com.project.vacancypromobile.models.Place
 
-data class Period (
+data class PeriodsResultRequest (
     @SerializedName("id")
     var id: Int = 0,
     @SerializedName("name")
@@ -11,9 +11,9 @@ data class Period (
     @SerializedName("description")
     var description: String = "",
     @SerializedName("beginDate")
-    var beginDate : Date,
+    var beginDate : String,
     @SerializedName("endDate")
-    var endDate : Date,
+    var endDate : String,
     @SerializedName("place")
     var place : Place
 )

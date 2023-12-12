@@ -51,7 +51,10 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
                     Text(text = "Aucune période n'est disponible")
                 } else {
                     for (period in homeViewModel.periods) {
-                        PeriodCard(periodViewModel = PeriodViewModel(period))
+                        PeriodCard(periodViewModel = PeriodViewModel(period) ,
+                            onClick = {
+                            navController.navigate("period/${period.id}")
+                        })
                     }
                 }
 

@@ -1,11 +1,15 @@
 package com.project.vacancypromobile.viewModel
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.project.vacancypromobile.models.Period
+import com.project.vacancypromobile.models.Place
+import java.util.Date
 import javax.inject.Inject
 
 
@@ -40,13 +44,19 @@ class NewPeriodViewModel @Inject constructor()   : ViewModel(){
         this.periodPlace = periodPlace
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun createPeriod() {
         Log.d("Testing ", "Wow ");
 
 
         val period = Period(
             name = periodName,
-            description = periodDescription);
+            description = periodDescription,
+            beginDate = Date(),
+            endDate = Date(),
+            place = Place("null","null","null")
+
+        );
         //periodRepository.createPeriod(period);
 
 
