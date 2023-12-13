@@ -3,6 +3,8 @@ package com.project.vacancypromobile.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -20,25 +22,55 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
-    var isSnackBarShowing: Boolean by mutableStateOf(false)
-        private set
+
+    /*private val _loginState = MutableSharedFlow<Boolean>()
+    val loginState = _loginState.asSharedFlow()*/
+
+    private val _loginMessage = MutableLiveData<String>()
+    val loginMessage: LiveData<String> get() = _loginMessage
+
+    var errorMsg = "Connexion échouée"
+
+    /*private fun setLoginState(state: Boolean) {
+        viewModelScope.launch {
+            _loginState.emit(state)
+        }
+    }*/
+
+
     var email by mutableStateOf("")
     var password by mutableStateOf("")
     var loginSuccess = false
-    private fun showSnackBar() {
-        isSnackBarShowing = true
-    }
-    fun dismissSnackBar() {
-        isSnackBarShowing = false
-    }
 
 
 
     fun updateEmail(input: String) { email = input }
     fun updatePassword(input: String) { password = input }
+    private fun verifyData(): Boolean {
+        val regex = Regex("^[a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*\$")
+        if (email.isEmpty()) {
+            _loginMessage.value = "Email manquant"
+            return false
+        }
+        if (!regex.matches(email)) {
+            _loginMessage.value = "Email invalide"
+            return false
+        }
+        if (password.isEmpty()) {
+            _loginMessage.value = "Mot de passe manquant"
+            return false
+        }
+        return true
+    }
+
     suspend fun logIn() {
-        val request = LoginRequest(email, password)
-        loginSuccess = userRepository.signIn(request)
+        if(verifyData()) {
+            val request = LoginRequest(email, password)
+            loginSuccess = userRepository.signIn(request)
+            if (loginSuccess) _loginMessage.value = "Connexion réussie !"
+            else _loginMessage.value = "Connexion échouée"
+
+        }
 
     }
 }

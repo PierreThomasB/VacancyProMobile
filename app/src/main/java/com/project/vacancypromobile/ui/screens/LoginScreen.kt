@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -22,6 +23,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -29,6 +33,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,9 +57,16 @@ fun LoginScreen (
     loginViewModel: LoginViewModel = viewModel(),
     navController: NavController
 ) {
-    val context = LocalContext.current
+    val loginMessage by loginViewModel.loginMessage.observeAsState()
     VacancypromobileTheme {
+        val snackbarHostState = remember { SnackbarHostState() }
+        if (!loginMessage.isNullOrEmpty()) {
+            LaunchedEffect(loginMessage) {
+                snackbarHostState.showSnackbar(message = loginMessage!!, duration = SnackbarDuration.Short)
+            }
+        }
         Scaffold(
+            snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = { CenterAlignedTopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 titleContentColor = MaterialTheme.colorScheme.primary,
@@ -98,7 +111,7 @@ fun LoginScreen (
                     )
                     OutlinedButton(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 10.dp),onClick = { login(context, loginViewModel, navController) }) {
+                        .padding(top = 10.dp),onClick = { login(loginViewModel, navController) }) {
                         Text(text = "Se connecter")
                     }
                     Divider()
@@ -109,7 +122,7 @@ fun LoginScreen (
     }
 }
 
-fun login(context: Context, loginViewModel: LoginViewModel, navController: NavController) {
+fun login(loginViewModel: LoginViewModel, navController: NavController) {
     runBlocking { loginViewModel.logIn() }
     if (loginViewModel.loginSuccess) {
         navController.navigate(route = Screen.Home.route) {
@@ -117,7 +130,7 @@ fun login(context: Context, loginViewModel: LoginViewModel, navController: NavCo
                 inclusive = true
             }
         }
-    } else Toast.makeText(context, "Données invalides", Toast.LENGTH_LONG).show()
+    }
 
 }
 
