@@ -10,18 +10,24 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.project.vacancypromobile.viewModel.PeriodDetailViewModel
+import kotlinx.coroutines.runBlocking
 
 
 @Composable
 fun PeriodDetailsScreen(
     periodDetailViewModel: PeriodDetailViewModel = viewModel(),
     navController: NavController = rememberNavController(),
-    periodId: Int = 1,
+
 ) {
-    Box(){
+    Box {
         Text("Period Details")
 
         Text(periodDetailViewModel.periodName , modifier = Modifier.align(Alignment.Center))
+
+        for(activity in periodDetailViewModel.periodActivity){
+
+            }
+        }
 
 
 

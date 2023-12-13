@@ -2,7 +2,6 @@ package com.project.vacancypromobile.services
 
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.User
-import com.project.vacancypromobile.services.requests.ActivityListRequest
 import com.project.vacancypromobile.services.requests.LoginRequest
 import com.project.vacancypromobile.services.requests.PeriodsResultRequest
 import com.project.vacancypromobile.services.requests.RegisterRequest
@@ -34,8 +33,8 @@ interface ApiService {
     @GET("api/Period/PeriodByUser")
     suspend fun getAllPeriod() : Response<List<PeriodsResultRequest>>
 
-    @GET("api/Activity/ActivityByPeriod?id={id}")
-    suspend fun getActivityByPeriod(@Path("id") id : Int) : Response<List<ActivityListRequest>>
+    @GET("api/Period/{id}")
+    suspend fun getActivityByPeriod(@Path("id") id : Int) : Response<Period>
 
 
 }
