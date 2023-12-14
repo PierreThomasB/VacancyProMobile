@@ -1,5 +1,6 @@
 package com.project.vacancypromobile.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,11 +23,16 @@ import com.project.vacancypromobile.ui.screens.composent.PeriodCard
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.HomeViewModel
 import com.project.vacancypromobile.viewModel.PeriodViewModel
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHostController = rememberNavController()) {
+    homeViewModel.loadCurrentUser()
+    if(homeViewModel.getUser().username != null) {
+        runBlocking { homeViewModel.getPeriods() }
+    }
 
     VacancypromobileTheme {
         Scaffold(
@@ -42,15 +48,15 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
                 modifier = Modifier.padding(innerPadding),
             ) {
                 Text(text = "Vos Vacances en un clic !")
-                Text(text = homeViewModel.count.toString()+" périodes disponibles")
 
-                if (homeViewModel.count == 0) {
+                if (homeViewModel.periods.isEmpty()) {
                     Text(text = "Aucune période n'est disponible")
                 } else {
                     for (period in homeViewModel.periods) {
                         PeriodCard(periodViewModel = PeriodViewModel(period) ,
                             onClick = {
-                            navController.navigate("period/${period.id}")
+                                Log.d("Period", "Period clicked + ${period.id}")
+                                navController.navigate("period_details_screen/"+period.id)
                         })
                     }
                 }

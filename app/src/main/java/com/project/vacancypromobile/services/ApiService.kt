@@ -34,7 +34,10 @@ interface ApiService {
     suspend fun getAllPeriod() : Response<List<PeriodsResultRequest>>
 
     @GET("api/Period/{id}")
-    suspend fun getActivityByPeriod(@Path("id") id : Int) : Response<Period>
+    suspend fun getPeriodById(@Path("id") id : Int) : Response<PeriodsResultRequest>
+
+    @GET("api/Meteo/GetMeteoInfo")
+    suspend fun getMeteoInfo() : Response<String>
 
 
 }

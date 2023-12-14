@@ -38,7 +38,7 @@ fun PeriodCard(periodViewModel: PeriodViewModel  , onClick: () -> Unit){
             .padding(16.dp)
             .background(Color.White)
             .clip(RoundedCornerShape(8.dp))
-            .clickable { }
+            .clickable { onClick()}
     ) {
         Box(
             contentAlignment = Alignment.Center,

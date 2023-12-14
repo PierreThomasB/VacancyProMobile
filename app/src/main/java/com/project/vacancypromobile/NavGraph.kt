@@ -2,8 +2,10 @@ package com.project.vacancypromobile
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.project.vacancypromobile.ui.screens.HomeScreen
 import com.project.vacancypromobile.ui.screens.LoginScreen
 import com.project.vacancypromobile.ui.screens.NewPeriodScreen
@@ -34,7 +36,7 @@ fun SetupNavGraph(
         composable(route = Screen.Register.route){RegisterScreen(registerViewModel, navController)}
         composable(route = Screen.CreatePeriod.route){ NewPeriodScreen(newPeriodViewModel, navController) }
         composable(route = Screen.Period.route){ NewPeriodScreen(newPeriodViewModel, navController) }
-        composable(route = Screen.PeriodDetails.route){ PeriodDetailsScreen(periodDetailViewModel , navController) }
+        composable(route = Screen.PeriodDetails.route , arguments = listOf(navArgument("periodId") { type = NavType.IntType })){ PeriodDetailsScreen(periodDetailViewModel , navController) }
 
     }
 }

@@ -39,6 +39,21 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
         }
     }
 
+    suspend fun getPeriodById(id : Int) : Period? {
+        val response = apiService.getPeriodById(id)
+        if (response.isSuccessful && response.body() != null) {
+            val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+            val resp = response.body()
+            if(resp != null) {
+                return Period(resp.id, resp.name, resp.description, format.parse(resp.beginDate),  format.parse(resp.endDate) , resp.place ,emptyList());
+            }
+            return null;
+        } else {
+            Log.d("Period", "Period not found")
+            return null
+        }
+    }
+
 
 
 }
