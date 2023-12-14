@@ -18,6 +18,7 @@ import coil.compose.AsyncImage
 import com.project.vacancypromobile.models.Activity
 import com.project.vacancypromobile.models.Place
 import com.project.vacancypromobile.viewModel.ActivityDetailViewModel
+import java.util.Date
 
 @Composable
 fun ActivityCard(
@@ -50,7 +51,7 @@ fun ActivityCard(
 @Composable
 @Preview
 fun ActivityCardPreview() {
-    ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity = Activity(1,"name","Ceci est une tres lognue description pour tester mon affichage ","d","d",
+    ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity = Activity(1,"name","Ceci est une tres lognue description pour tester mon affichage ",Date(),Date(),
         Place("Ca c'est big cet endroit","","AWU5eFiPT2gyC49KbvhLd7QvNW9aRTZNhciegQsbu0B6A4Ybiu_o_CODKq4rcYeSdAJCxSYk-j74yLa6ck8JL3OzrbMibzERPJ1j1xNhMdu2UG7M2_GuzieoPuyEItExKE-wDSsg0VVSfsHuY1Zho2piZgu-l-qJEuSIBi6hitY0GBCn7BHm")
     )))
 }

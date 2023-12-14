@@ -1,7 +1,12 @@
 package com.project.vacancypromobile.viewModel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.project.vacancypromobile.datas.ActivityRepository
 import com.project.vacancypromobile.datas.PeriodRepository
+import com.project.vacancypromobile.models.Activity
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.Place
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,30 +15,33 @@ import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class PeriodDetailViewModel @Inject constructor(private val periodRepository: PeriodRepository )  : ViewModel() {
+class PeriodDetailViewModel @Inject constructor(private val activityRepository: ActivityRepository , private val periodRepository: PeriodRepository )  : ViewModel() {
 
 
 
     fun initPeriodDetails(id : Int) {
-        runBlocking {
-            period = getPeriodDetails(id)
+        if(id != 0 ) {
+            runBlocking {
+                getPeriodDetails(id)
+            }
         }
     }
 
 
-     var period : Period? = null ;
+    private var activities by mutableStateOf(emptyList<Activity>())
+
+     var period by mutableStateOf(Period(0,"","", Date(),Date(), Place("0","",""), emptyList()))
+
+    
 
 
 
-
-
-    private suspend fun getPeriodDetails(id : Int) : Period {
-
-        val resp =  periodRepository.getPeriodById(id)
+    private suspend fun getPeriodDetails(id : Int)  {
+        period = periodRepository.getPeriod(id)!!;
+        val resp =  activityRepository.getActivitiesByPeriod(id)
         if(resp != null) {
-            return resp;
+            activities = resp
         }
-        return Period(0,"","", Date(),Date(), Place("0","",""), emptyList());
     }
 
 

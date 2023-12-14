@@ -11,6 +11,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.project.vacancypromobile.ui.screens.composent.ActivityCard
 import com.project.vacancypromobile.viewModel.PeriodDetailViewModel
+import kotlinx.coroutines.runBlocking
 
 
 @Composable
@@ -20,16 +21,13 @@ fun PeriodDetailsScreen(
 
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
-    val id = backStackEntry.value?.arguments?.getInt("periodId") ?: 0
-    periodDetailViewModel.initPeriodDetails(id);
-    if(periodDetailViewModel.period == null) {
-        //navController.popBackStack()
+    runBlocking {
+        periodDetailViewModel.initPeriodDetails(backStackEntry.value?.arguments?.getInt("periodId") ?: 0);
     }
 
     Box {
         Column {
             Text("Period Details")
-
             Text("Name : ${periodDetailViewModel.period?.name}")
             Text("Description : ${periodDetailViewModel.period?.description}")
             Text("Begin Date : ${periodDetailViewModel.period?.beginDate}")
