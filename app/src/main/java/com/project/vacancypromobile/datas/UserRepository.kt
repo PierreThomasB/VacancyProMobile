@@ -65,4 +65,8 @@ class UserRepository @Inject constructor(val tokenManager: TokenManager, val api
             tokenManager.saveToken(currentUser!!.token)
         }
     }
+
+    suspend fun logout() {
+        tokenManager.deleteToken()
+    }
 }

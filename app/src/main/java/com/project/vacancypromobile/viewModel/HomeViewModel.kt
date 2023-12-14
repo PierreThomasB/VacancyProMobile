@@ -1,14 +1,17 @@
 package com.project.vacancypromobile.viewModel
 
+import android.app.Activity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.project.vacancypromobile.datas.PeriodRepository
 import com.project.vacancypromobile.datas.UserRepository
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,15 +34,12 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
         periods = periodRepository.getAllPeriod()
     }
 
-
-
-
-
-
-
-
-
-
+    fun logout(activity: Activity?) {
+        viewModelScope.launch {
+            activity?.finish()
+            userRepository.logout()
+        }
+    }
 
 
 }

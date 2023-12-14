@@ -12,14 +12,12 @@ import com.project.vacancypromobile.viewModel.HomeViewModel
 import com.project.vacancypromobile.viewModel.LoginViewModel
 import com.project.vacancypromobile.viewModel.MainViewModel
 import com.project.vacancypromobile.viewModel.NewPeriodViewModel
-import com.project.vacancypromobile.viewModel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
     private val loginViewModel: LoginViewModel by viewModels()
-    private val registerViewModel: RegisterViewModel by viewModels()
     private val newPeriodViewModel: NewPeriodViewModel by viewModels()
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -33,7 +31,6 @@ class MainActivity : ComponentActivity() {
             SetupNavGraph(
                 navController = navController,
                 loginViewModel = loginViewModel,
-                registerViewModel = registerViewModel,
                 newPeriodViewModel = newPeriodViewModel,
                 homeViewModel =  homeViewModel
             )

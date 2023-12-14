@@ -28,7 +28,7 @@ fun PlacesAutocompleteTextField(
     })
     OutlinedTextField(
         modifier = modifier ,
-        value = "Entrez l'endroit",
+        value = "Lieu",
         onValueChange = { place -> run { autocompleteFragment.setText(place) } },
     )
 

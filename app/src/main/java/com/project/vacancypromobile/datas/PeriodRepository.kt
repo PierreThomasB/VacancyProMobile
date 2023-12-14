@@ -12,7 +12,7 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
 
     private var _periods = mutableListOf<Period>();
 
-    suspend fun createPeriod(request: Period) {
+    suspend fun createPeriod(request: Period): Boolean {
         val response = apiService.createPeriod(request)
         if (response.isSuccessful && response.body() != null) {
             _periods.add(request)
@@ -20,6 +20,7 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
         } else {
             Log.d("Period", "Period not created")
         }
+        return response.isSuccessful
     }
 
 
