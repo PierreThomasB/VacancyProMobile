@@ -95,7 +95,7 @@ import java.util.Date
             },
             modifier = modifier,
         ) {
-            Text(text = "Ajouter une période")
+            Text(text = "Ajouter les dates")
         }
     }
 

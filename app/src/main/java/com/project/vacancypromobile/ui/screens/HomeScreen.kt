@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -18,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.project.vacancypromobile.ui.screens.composent.BottomNavItem
+import com.project.vacancypromobile.ui.screens.composent.NavBar
 import com.project.vacancypromobile.ui.screens.composent.PeriodCard
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.HomeViewModel
@@ -40,7 +44,8 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                     title = { Text("Vacancy Pro") })
-            }
+            },
+            bottomBar = { NavBar(navController = navController) }
         ) { innerPadding ->
             Column(
                 modifier = Modifier.padding(innerPadding),
