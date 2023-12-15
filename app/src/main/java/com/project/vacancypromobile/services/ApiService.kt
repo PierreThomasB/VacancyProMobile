@@ -4,6 +4,7 @@ import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.requests.ActivityListRequest
 import com.project.vacancypromobile.services.requests.LoginRequest
+import com.project.vacancypromobile.services.requests.MeteoRequest
 import com.project.vacancypromobile.services.requests.PeriodsResultRequest
 import com.project.vacancypromobile.services.requests.RegisterRequest
 import retrofit2.Response
@@ -43,8 +44,8 @@ interface ApiService {
 
 
     /** METEO **/
-    @GET("api/Meteo/GetMeteoInfo")
-    suspend fun getMeteoInfo() : Response<String>
+    @GET("api/Meteo/GetMeteo")
+    suspend fun getMeteoInfo(@Query("lieu") ville : String) : Response<MeteoRequest>
 
     /** ACTIVITIES **/
     @GET("api/Activity/ActivityByPeriod")

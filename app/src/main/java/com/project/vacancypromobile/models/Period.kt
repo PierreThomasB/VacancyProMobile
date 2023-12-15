@@ -3,19 +3,19 @@ package com.project.vacancypromobile.models
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-data class Period (
-    @SerializedName("id")
+ class Period  (
+     @SerializedName("id")
     val id: Int = 0,
-    @SerializedName("name")
+     @SerializedName("name")
     val name: String = "",
-    @SerializedName("description")
+     @SerializedName("description")
     val description: String = "",
-    @SerializedName("beginDate")
-    val beginDate : Date,
-    @SerializedName("endDate")
-    val endDate : Date,
-    @SerializedName("place")
-    val place : Place,
-    @SerializedName("activities")
+     @SerializedName("beginDate")
+     override val beginDate: Date,
+     @SerializedName("endDate")
+     override val endDate: Date,
+     @SerializedName("place")
+     val place : Place,
+     @SerializedName("activities")
     val activities: List<Activity>
-)
+ ) : HasPeriodDates

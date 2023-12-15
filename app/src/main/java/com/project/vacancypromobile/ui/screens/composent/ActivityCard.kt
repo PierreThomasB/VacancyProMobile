@@ -1,14 +1,13 @@
 package com.project.vacancypromobile.ui.screens.composent
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,29 +22,37 @@ import java.util.Date
 @Composable
 fun ActivityCard(
     activityDetailViewModel: ActivityDetailViewModel = viewModel(),
+    onActivityClick: (Int) -> Unit = { }
 
     ) {
 
-    Box(modifier =
-    Modifier.fillMaxSize().height(100.dp).padding(8.dp),
-        )
+    OutlinedCard(
+        modifier =
+        Modifier
+            .padding(16.dp)
+            .clickable(onClick = { onActivityClick(-1) })
+    ) {
         Row(Modifier.padding(15.dp)) {
             AsyncImage(
-                model = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyAeX0rGP22Zfco3WbT44TFHbKxqmPmIK_s&photo_reference="+activityDetailViewModel.activityImage,
+                model = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyAeX0rGP22Zfco3WbT44TFHbKxqmPmIK_s&photo_reference=" + activityDetailViewModel.activityImage,
                 placeholder = null,
                 error = null,
                 contentDescription = "Image du lieux ",
                 modifier = Modifier.height(80.dp)
             )
-            Column(modifier = Modifier.padding(horizontal = 10.dp) ) {
-                Text(text = activityDetailViewModel.activityName ,  modifier = Modifier.align(Alignment.CenterHorizontally))
-                Text(text = activityDetailViewModel.activityDescription ,  color = Color.LightGray ,  modifier = Modifier.align(Alignment.CenterHorizontally) )
-                Text(text = activityDetailViewModel.activityStartDate+" -> "+activityDetailViewModel.activityEndDate ,  color = Color.Gray ,  modifier = Modifier.align(Alignment.CenterHorizontally))
-                Text(text = activityDetailViewModel.activityPlace , color = Color.Yellow ,  modifier = Modifier.align(Alignment.CenterHorizontally))
+            Column(modifier = Modifier.padding(horizontal = 10.dp)) {
+                Text(text = activityDetailViewModel.activityName,)
+                Text(text = activityDetailViewModel.activityDescription, color = Color.LightGray)
+                Text(
+                    text = activityDetailViewModel.activityDate ,
+                    color = Color.Gray
+                )
+                Text(text = activityDetailViewModel.activityPlace, color = Color.Yellow)
             }
         }
 
     }
+}
 
 
 @Composable

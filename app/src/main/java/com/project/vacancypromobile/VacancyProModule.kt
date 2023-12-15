@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.project.vacancypromobile.datas.ActivityRepository
+import com.project.vacancypromobile.datas.MeteoRepository
 import com.project.vacancypromobile.datas.PeriodRepository
 import com.project.vacancypromobile.datas.UserRepository
 import com.project.vacancypromobile.services.ApiService
@@ -62,5 +63,9 @@ class VacancyProModule {
     @Singleton
     @Provides
     fun provideActivityRepository(apiService: ApiService): ActivityRepository = ActivityRepository(apiService)
+
+    @Singleton
+    @Provides
+    fun provideMeteoRepository(apiService: ApiService): MeteoRepository = MeteoRepository(apiService)
 
 }

@@ -65,7 +65,7 @@ fun PeriodCard(periodViewModel: PeriodViewModel  , onClick: () -> Unit){
                            text = "${periodViewModel.description}",
                        )
                        Text(
-                           text = "${periodViewModel.beginDate} -> ${periodViewModel.endDate}",
+                           text = "${periodViewModel.date}",
                        )
                    }
                 }
