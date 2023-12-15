@@ -22,6 +22,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -44,6 +45,7 @@ import com.project.vacancypromobile.ui.screens.composent.ActivityCard
 import com.project.vacancypromobile.ui.screens.composent.ChatComp
 import com.project.vacancypromobile.ui.screens.composent.MeteoComp
 import com.project.vacancypromobile.viewModel.ActivityDetailViewModel
+import com.project.vacancypromobile.viewModel.ChatViewModel
 import com.project.vacancypromobile.viewModel.MeteoViewModel
 import com.project.vacancypromobile.viewModel.PeriodDetailViewModel
 import kotlinx.coroutines.runBlocking
@@ -153,9 +155,21 @@ fun PeriodDetailsScreen(
 
         if(showedChat) {
             ModalBottomSheet(onDismissRequest = { showedChat = false }) {
-                Column() {
-                    ChatComp()
-                    Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Text("Messages : "  ,modifier = Modifier
+                        .padding(top = 10.dp)
+                        .align(Alignment.CenterHorizontally) , fontSize = 20.sp)
+                    Column {
+                        for (message in periodDetailViewModel.messages){
+                            ChatComp(ChatViewModel(message))
+                        }
+                        Row( Modifier.padding(8.dp)) {
+                            OutlinedTextField(value = periodDetailViewModel.tempMessage, onValueChange = {temp -> periodDetailViewModel.updateTempMessage(temp)} , placeholder = { Text("Message") } , modifier = Modifier.fillMaxWidth(0.8f))
+                            Button(onClick = { }) {
+                                Icon(Icons.Default.Send, contentDescription = "Envoyer")
+                            }
+                        }
+                    }
 
 
                 }

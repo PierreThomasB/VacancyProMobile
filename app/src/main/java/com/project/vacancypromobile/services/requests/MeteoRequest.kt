@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 
 
-data class Curent(
+ data class Curent(
     @SerializedName("temperature")
     val temperature : Double,
     @SerializedName("weather_icons")
@@ -14,7 +14,7 @@ data class Curent(
 
 )
 
- data class Localisation(
+  data class Localisation(
 
     @SerializedName("name")
     val name : String,
@@ -23,7 +23,7 @@ data class Curent(
 
     )
 
-data class MeteoRequest (
+ data class MeteoRequest (
 
     @SerializedName("location")
     val location : Localisation,

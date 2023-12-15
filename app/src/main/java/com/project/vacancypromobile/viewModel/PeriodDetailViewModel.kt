@@ -35,6 +35,13 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
     var activities by mutableStateOf(emptyList<Activity>())
     var period by mutableStateOf(Period(0,"","", Date(),Date(), Place("0","",""), emptyList()))
     var messages by mutableStateOf(emptyList<Message>())
+    var tempMessage by mutableStateOf("")
+
+
+    fun updateTempMessage(temp : String ){
+        tempMessage = temp;
+    }
+
 
     private suspend fun getPeriodDetails(id : Int)  {
         period = periodRepository.getPeriod(id)!!;
@@ -53,7 +60,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
     }
 
     private suspend fun getMessages() {
-        val resp = chatRepository.getAllMessages("id")
+        val resp = chatRepository.getAllMessages("channel_"+period.id)
         if (resp != null) {
             messages = resp
 
