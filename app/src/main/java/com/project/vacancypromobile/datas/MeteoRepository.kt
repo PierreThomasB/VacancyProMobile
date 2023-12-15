@@ -11,11 +11,7 @@ class MeteoRepository @Inject constructor(private  val apiService: ApiService) :
         val resp = apiService.getMeteoInfo(ville)
         if(resp.isSuccessful && resp.body() != null) {
             val response = resp.body()
-
-
-        }
-        else {
-            val error = resp.errorBody()
+            return Meteo(response?.location!!.name , response.location.country,response?.current!!.condition[0],response?.current.icon[0]);
         }
         return null;
     }

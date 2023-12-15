@@ -25,7 +25,7 @@ fun SetupNavGraph(
     registerViewModel: RegisterViewModel,
     newPeriodViewModel: NewPeriodViewModel,
     homeViewModel: HomeViewModel,
-    periodDetailViewModel: PeriodDetailViewModel
+    periodDetailViewModel: PeriodDetailViewModel,
 ) {
     NavHost(
         navController = navController,

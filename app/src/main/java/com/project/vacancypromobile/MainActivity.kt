@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 registerViewModel = registerViewModel,
                 newPeriodViewModel = newPeriodViewModel,
                 homeViewModel =  homeViewModel,
-                periodDetailViewModel = periodDetailViewModel
+                periodDetailViewModel = periodDetailViewModel,
             )
             mainViewModel.loadUser()
             val user = mainViewModel.getCurrentUser()

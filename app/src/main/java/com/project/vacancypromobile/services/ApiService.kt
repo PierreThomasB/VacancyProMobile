@@ -1,5 +1,6 @@
 package com.project.vacancypromobile.services
 
+import com.project.vacancypromobile.models.Message
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.requests.ActivityListRequest
@@ -50,6 +51,10 @@ interface ApiService {
     /** ACTIVITIES **/
     @GET("api/Activity/ActivityByPeriod")
     suspend fun getActivitiesByPeriod(@Query("id") periodId : Int) : Response<List<ActivityListRequest>>
+
+    /** MESSAGES*/
+    @GET("api/Message/MessageByChannel")
+    suspend fun getAllMessages(@Query("channel") channel : String) : Response<List<Message>>
 
 
 }

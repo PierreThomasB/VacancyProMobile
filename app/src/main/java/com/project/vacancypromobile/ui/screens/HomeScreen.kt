@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -47,7 +48,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
             Column(
                 modifier = Modifier.padding(innerPadding),
             ) {
-                Text(text = "Vos Vacances en un clic !")
+                Text(text = "Vos Vacances en un clic !" , modifier = Modifier.align(Alignment.CenterHorizontally) , fontSize = 25.sp)
 
                 if (homeViewModel.periods.isEmpty()) {
                     Text(text = "Aucune période n'est disponible")
