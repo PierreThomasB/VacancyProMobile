@@ -15,10 +15,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 import javax.inject.Singleton
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "data_store")
@@ -31,10 +31,12 @@ class VacancyProModule {
         .connectTimeout(100, TimeUnit.SECONDS)
         .readTimeout(100, TimeUnit.SECONDS)
         .build()
+
     @Singleton
     @Provides
     fun provideApiService (authInterceptor: AuthInterceptor) : ApiService {
-        val okHttpClient = OkHttpClient.Builder().addInterceptor(authInterceptor).build()
+        val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+        val okHttpClient = OkHttpClient.Builder().addInterceptor(authInterceptor).addInterceptor(logging).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)

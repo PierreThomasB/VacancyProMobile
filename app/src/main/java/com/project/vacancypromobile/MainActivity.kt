@@ -1,11 +1,14 @@
 package com.project.vacancypromobile
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.project.vacancypromobile.ui.screens.Screen
 import com.project.vacancypromobile.viewModel.HomeViewModel
@@ -23,9 +26,9 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
     private lateinit var placesClient : PlacesClient;
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             navController = rememberNavController()
             SetupNavGraph(

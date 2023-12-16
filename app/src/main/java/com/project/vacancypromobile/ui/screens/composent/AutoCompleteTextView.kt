@@ -1,41 +1,56 @@
-
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.android.gms.common.api.Status
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import androidx.lifecycle.viewmodel.compose.viewModel
+
+import com.project.vacancypromobile.viewModel.NewPeriodViewModel
 
 @Composable
 fun PlacesAutocompleteTextField(
+    viewModel: NewPeriodViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val autocompleteFragment  = AutocompleteSupportFragment()
-
-    autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
-
-    autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-        override fun onError(p0: Status) {
-            TODO("Not yet implemented")
+    var text by remember { mutableStateOf("") }
+    var isVisible by remember { mutableStateOf(false) }
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            modifier = modifier,
+            value = text,
+            label = { Text(text = "Lieu") },
+            onValueChange = { newText ->
+                text = newText
+                isVisible = true
+                viewModel.getPredictions(newText)
+            })
+        if (isVisible) {
+            viewModel.predictions.observeAsState().value?.forEach { prediction ->
+                val place = prediction.getFullText(null).toString()
+                TextButton(onClick = {
+                    viewModel.updatePeriodPlace(place, prediction.placeId)
+                    text = viewModel.periodPlace
+                    isVisible = false
+                }) {
+                    Text(place)
+                }
+            }
         }
 
-        override fun onPlaceSelected(place: Place) {
-        }
 
-
-    })
-    OutlinedTextField(
-        modifier = modifier ,
-        value = "Lieu",
-        onValueChange = { place -> run { autocompleteFragment.setText(place) } },
-    )
+    }
 
 }
 
 @Preview
 @Composable
 fun PlacesAutocompleteTextFieldPreview() {
-    PlacesAutocompleteTextField()
+    PlacesAutocompleteTextField(viewModel = viewModel())
 }

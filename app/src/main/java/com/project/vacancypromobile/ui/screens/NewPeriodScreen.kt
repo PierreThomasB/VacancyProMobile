@@ -98,6 +98,7 @@ fun NewPeriodScreen(
                         }
                     )
                     PlacesAutocompleteTextField(
+                        newPeriodViewModel,
                         modifier = Modifier
                             .fillMaxWidth()
                     )

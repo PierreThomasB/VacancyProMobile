@@ -3,6 +3,7 @@ package com.project.vacancypromobile.datas
 import android.util.Log
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.services.ApiService
+import com.project.vacancypromobile.services.requests.PeriodRequest
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import javax.inject.Inject
@@ -12,10 +13,10 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
 
     private var _periods = mutableListOf<Period>();
 
-    suspend fun createPeriod(request: Period): Boolean {
+    suspend fun createPeriod(request: PeriodRequest): Boolean {
         val response = apiService.createPeriod(request)
         if (response.isSuccessful && response.body() != null) {
-            _periods.add(request)
+            //_periods.add(request)
             Log.d("Period", "Period created")
         } else {
             Log.d("Period", "Period not created")

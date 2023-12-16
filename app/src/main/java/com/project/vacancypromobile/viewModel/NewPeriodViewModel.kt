@@ -1,5 +1,6 @@
 package com.project.vacancypromobile.viewModel
 
+import android.app.Application
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -8,27 +9,52 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.AutocompletePrediction
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.project.vacancypromobile.datas.PeriodRepository
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.Place
+import com.project.vacancypromobile.models.User
+import com.project.vacancypromobile.services.requests.PeriodRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class NewPeriodViewModel @Inject constructor(private val periodRepository: PeriodRepository) :
+class NewPeriodViewModel @Inject constructor(
+    private val periodRepository: PeriodRepository,
+    private val application: Application
+) :
     ViewModel() {
 
     private val _newPeriodMessage = MutableLiveData<String>()
     val newPeriodMessage: MutableLiveData<String> get() = _newPeriodMessage
     var newPeriodSuccess = false
 
-
     var periodName by mutableStateOf("")
     var periodDescription by mutableStateOf("")
     var periodStartDate by mutableStateOf<String>("")
     var periodEndDate by mutableStateOf<String>("")
-    private var periodPlace by mutableStateOf("")
+    var periodPlace by mutableStateOf("")
+    private lateinit var periodPlaceId: String
+
+    val predictions = MutableLiveData<List<AutocompletePrediction>>()
+
+    fun getPredictions(input: String) {
+        viewModelScope.launch {
+            val placesClient = Places.createClient(application)
+            val request = FindAutocompletePredictionsRequest.builder().setQuery(input).build()
+            val response = placesClient.findAutocompletePredictions(request)
+            response.addOnCompleteListener { task ->
+                predictions.value = task.result.autocompletePredictions
+            }
+        }
+    }
+
 
     fun updatePeriodName(periodName: String) {
         this.periodName = periodName
@@ -39,17 +65,19 @@ class NewPeriodViewModel @Inject constructor(private val periodRepository: Perio
     }
 
     fun updatePeriodStartDate(periodStartDate: String) {
-        Log.d("Testing ", periodStartDate)
+        //Log.d("Testing ", periodStartDate)
         this.periodStartDate = periodStartDate
     }
 
     fun updatePeriodEndDate(periodEndDate: String) {
-        Log.d("Testing ", periodEndDate)
+        //Log.d("Testing ", periodEndDate)
         this.periodEndDate = periodEndDate
     }
 
-    fun updatePeriodPlace(periodPlace: String) {
+    fun updatePeriodPlace(periodPlace: String, placeId: String) {
+        //getPredictions(periodPlace)
         this.periodPlace = periodPlace
+        this.periodPlaceId = placeId
     }
 
     private fun verifyData(): Boolean {
@@ -80,16 +108,23 @@ class NewPeriodViewModel @Inject constructor(private val periodRepository: Perio
     suspend fun createPeriod() {
         Log.d("Testing ", "Wow ");
         if (verifyData()) {
+            val request = PeriodRequest(
+                name = periodName,
+                description = periodDescription,
+                beginDate = periodStartDate,
+                endDate = periodEndDate,
+                place = Place(periodPlace, periodPlaceId, "null"),
+                users = emptyList<User>()
+            )
             val period = Period(
                 name = periodName,
                 description = periodDescription,
                 beginDate = Date(),
                 endDate = Date(),
-                place = Place("null", "null", "null"),
+                place = Place(periodPlace, periodPlaceId, "null"),
                 activities = emptyList()
-
-            );
-            newPeriodSuccess = periodRepository.createPeriod(period);
+            )
+            newPeriodSuccess = periodRepository.createPeriod(request);
             if (newPeriodSuccess) _newPeriodMessage.value = "Période créée !"
             else _newPeriodMessage.value = "Période non créée"
         }

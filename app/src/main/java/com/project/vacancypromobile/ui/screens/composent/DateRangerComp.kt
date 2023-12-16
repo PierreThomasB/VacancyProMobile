@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -101,7 +102,7 @@ import java.util.Date
 
 
 fun convertDate(dateInMillis: Long): String {
-    val formatter = SimpleDateFormat("dd/MM/yyyy");
+    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
     val calendar = Calendar.getInstance();
     calendar.timeInMillis = dateInMillis;
     return (formatter.format(Date(calendar.timeInMillis)));
