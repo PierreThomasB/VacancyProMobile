@@ -32,7 +32,7 @@ class ActivityRepository @Inject constructor(private  val apiService: ApiService
                 activities.add(act)
                 this.activities[activity.id] = act
             }
-            return activities;
+            return activities.sortedBy { it.beginDate }
         }
         return emptyList();
     }

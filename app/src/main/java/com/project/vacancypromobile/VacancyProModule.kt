@@ -71,6 +71,6 @@ class VacancyProModule {
 
     @Singleton
     @Provides
-    fun provideChatRepository(apiService: ApiService): ChatRepository = ChatRepository(apiService)
+    fun provideChatRepository(apiService: ApiService): ChatRepository = ChatRepository(apiService )
 
 }

@@ -1,19 +1,24 @@
 package com.project.vacancypromobile.ui.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -26,6 +31,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -64,6 +70,14 @@ fun PeriodDetailsScreen(
         periodDetailViewModel.init(backStackEntry.value?.arguments?.getInt("periodId") ?: 0);
     }
     var showedChat by remember { mutableStateOf(false) }
+
+    val modalSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+
+
+
+
     Scaffold(
 
         topBar = {
@@ -82,24 +96,15 @@ fun PeriodDetailsScreen(
                 ),
                 title = {
                     Row() {
-                        Button(
-                            onClick = {  },
-                            colors = ButtonDefaults.buttonColors(
-                                contentColor = MaterialTheme.colorScheme.onPrimary
-                            )
-
-                        ) {
-                            Icon(Icons.Default.Delete, contentDescription = "Add")
-                        }
-                        Button(
-                            onClick = {  },
-                            colors = ButtonDefaults.buttonColors(
-                                contentColor = MaterialTheme.colorScheme.onPrimary
-                            )
-
-                        ) {
-                            Icon(Icons.Default.Add, contentDescription = "Add")
-                        }
+                        Icon(
+                            Icons.Default.Delete,
+                            contentDescription = "Delete",
+                            modifier = Modifier.clickable {  }.size(30.dp))
+                        Spacer(modifier = Modifier.width(80.dp))
+                        Icon(
+                            Icons.Default.Add,
+                            contentDescription = "Add",
+                            modifier = Modifier.clickable {  }.size(30.dp))
                     }
                 })
         },
@@ -148,30 +153,47 @@ fun PeriodDetailsScreen(
             Text("Activities : "  ,modifier = Modifier
                 .padding(top = 10.dp)
                 .align(Alignment.CenterHorizontally) , fontSize = 20.sp)
+
+            Row( modifier = Modifier.padding(10.dp)){
+                Text("Trié par date  : ")
+                    Icon(Icons.Default.KeyboardArrowUp, contentDescription = " croissant"  , Modifier.clickable { periodDetailViewModel.orderActivitiesByDate() })
+                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = " decroissant" , Modifier.clickable { periodDetailViewModel.orderActivitiesByDateDesc() } )
+
+            }
+            if(periodDetailViewModel.activities.isEmpty())
+                Text("Pas encore d'activité , Qu'attendez vous ? " , modifier = Modifier.align(Alignment.CenterHorizontally) , fontSize = 20.sp)
             for (activity in periodDetailViewModel.activities) {
-                ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity))
+                ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity) )
             }
         }
 
-        if(showedChat) {
-            ModalBottomSheet(onDismissRequest = { showedChat = false }) {
+        when  {
+            showedChat ->{
+            ModalBottomSheet(onDismissRequest = { showedChat = false } , sheetState = modalSheetState  ) {
                 Column {
-                    Text("Messages : "  ,modifier = Modifier
-                        .padding(top = 10.dp)
-                        .align(Alignment.CenterHorizontally) , fontSize = 20.sp)
-                    Column {
-                        for (message in periodDetailViewModel.messages){
+                    Text(
+                        "Messages : ", modifier = Modifier
+                            .padding(top = 10.dp)
+                            .align(Alignment.CenterHorizontally), fontSize = 20.sp
+                    )
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        for (message in periodDetailViewModel.messages) {
                             ChatComp(ChatViewModel(message))
                         }
-                        Row( Modifier.padding(8.dp)) {
-                            OutlinedTextField(value = periodDetailViewModel.tempMessage, onValueChange = {temp -> periodDetailViewModel.updateTempMessage(temp)} , placeholder = { Text("Message") } , modifier = Modifier.fillMaxWidth(0.8f))
-                            Button(onClick = { }) {
+                        Row(Modifier.padding(8.dp)) {
+                            OutlinedTextField(
+                                value = periodDetailViewModel.tempMessage,
+                                onValueChange = { temp ->
+                                    periodDetailViewModel.updateTempMessage(temp)
+                                },
+                                placeholder = { Text("Message") },
+                                modifier = Modifier.fillMaxWidth(0.8f))
+                            Button(onClick = { periodDetailViewModel.sendMessage() }) {
                                 Icon(Icons.Default.Send, contentDescription = "Envoyer")
                             }
                         }
                     }
-
-
+                }
                 }
             }
 

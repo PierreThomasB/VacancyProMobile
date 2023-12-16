@@ -7,6 +7,7 @@ import com.project.vacancypromobile.models.Activity
 
 class ActivityDetailViewModel (activity : Activity) : ViewModel(){
 
+    val activity by mutableStateOf( activity)
     val activityName by mutableStateOf( activity.name)
     val activityDescription by mutableStateOf( activity.description)
     val activityDate by mutableStateOf( activity.afficherDate())

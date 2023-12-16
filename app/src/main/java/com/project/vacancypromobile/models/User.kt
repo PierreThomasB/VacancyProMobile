@@ -2,13 +2,16 @@ package com.project.vacancypromobile.models
 
 import com.google.gson.annotations.SerializedName
 
+
 data class User(
+    @SerializedName("id")
+    val id : String ="",
     @SerializedName("username")
-    var username: String = "",
+    val username: String = "",
     @SerializedName("email")
-    var email: String = "",
+    val email: String = "",
     @SerializedName("isAdmin")
-    var isAdmin: Boolean = false,
+    val isAdmin: Boolean = false,
     @SerializedName("token")
-    var token: String = ""
+    val token: String = ""
 )

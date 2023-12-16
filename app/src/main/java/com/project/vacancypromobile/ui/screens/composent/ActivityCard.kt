@@ -6,9 +6,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,20 +25,23 @@ import coil.compose.AsyncImage
 import com.project.vacancypromobile.models.Activity
 import com.project.vacancypromobile.models.Place
 import com.project.vacancypromobile.viewModel.ActivityDetailViewModel
+import com.project.vacancypromobile.viewModel.composent.AddToCalendarViewModel
+import com.project.vacancypromobile.viewModel.composent.ShowItineraryViewModel
 import java.util.Date
 
 @Composable
 fun ActivityCard(
     activityDetailViewModel: ActivityDetailViewModel = viewModel(),
-    onActivityClick: (Int) -> Unit = { }
-
     ) {
 
+    val openAlertDialog = remember { mutableStateOf(false) }
+    val openItineraryDialog = remember { mutableStateOf(false) }
     OutlinedCard(
         modifier =
-        Modifier.fillMaxWidth()
+        Modifier
+            .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick = { onActivityClick(-1) })
+
     ) {
         Row(Modifier.padding(15.dp)) {
             AsyncImage(
@@ -50,8 +60,26 @@ fun ActivityCard(
                 )
                 Text(text = activityDetailViewModel.activityPlace, color = Color.Yellow)
             }
+            Column(){
+                Icon(Icons.Default.DateRange, contentDescription = "Ajouter au calendrier", Modifier.clickable {  openAlertDialog.value = true }.size(40.dp))
+                Icon(Icons.Default.Place, contentDescription = "Itinéraire" , Modifier.clickable {  openItineraryDialog.value = true }.size(40.dp))
+            }
         }
 
+    }
+    when {
+        openAlertDialog.value ->
+        AddToCalendarComp(
+            onDismissRequest = { openAlertDialog.value = false },
+            addToCalendarViewModel = AddToCalendarViewModel(activityDetailViewModel.activity)
+        )
+    }
+    when {
+        openItineraryDialog.value ->
+            ShowItineraryComp(
+                onDismissRequest = { openItineraryDialog.value = false },
+                showItineraryViewModel = ShowItineraryViewModel(activityDetailViewModel.activity.place.name)
+            )
     }
 }
 
