@@ -1,8 +1,10 @@
 package com.project.vacancypromobile.services
 
+import com.project.vacancypromobile.models.Activity
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.requests.ActivityListRequest
+import com.project.vacancypromobile.services.requests.ActivityRequest
 import com.project.vacancypromobile.services.requests.ChatRequest
 import com.project.vacancypromobile.services.requests.ChatSendRequest
 import com.project.vacancypromobile.services.requests.LoginRequest
@@ -60,6 +62,8 @@ interface ApiService {
     suspend fun getAllMessages(@Query("channel") channel : String) : Response<List<ChatRequest>>
     @POST("Chat/NewMessage")
     suspend fun sendMessage(@Body chatSendRequest: ChatSendRequest ) : Response<ChatRequest>
+    @POST("/api/Activity/NewActivity")
+    suspend fun createActivity(@Body request: ActivityRequest): Response<Activity>
 
 
 }

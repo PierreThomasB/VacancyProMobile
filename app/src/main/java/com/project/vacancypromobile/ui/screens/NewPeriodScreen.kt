@@ -1,6 +1,6 @@
 package com.project.vacancypromobile.ui.screens
 
-import PlacesAutocompleteTextField
+import PeriodPlacesAutocompleteTextField
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
@@ -99,7 +99,7 @@ fun NewPeriodScreen(
                             Text("Description")
                         }
                     )
-                    PlacesAutocompleteTextField(
+                    PeriodPlacesAutocompleteTextField(
                         newPeriodViewModel,
                         modifier = Modifier
                             .fillMaxWidth()

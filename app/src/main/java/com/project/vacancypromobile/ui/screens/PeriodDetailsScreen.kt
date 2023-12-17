@@ -69,6 +69,7 @@ fun PeriodDetailsScreen(
     runBlocking {
         periodDetailViewModel.init(backStackEntry.value?.arguments?.getInt("periodId") ?: 0);
     }
+    val periodId = backStackEntry.value?.arguments?.getInt("periodId") ?: 0
     var showedChat by remember { mutableStateOf(false) }
 
     val modalSheetState = rememberModalBottomSheetState(
@@ -85,7 +86,13 @@ fun PeriodDetailsScreen(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 titleContentColor = MaterialTheme.colorScheme.primary,
             ),
-                title = { Text(periodDetailViewModel.period.name , fontWeight = FontWeight.Bold ,  fontSize = 30.sp) })
+                title = {
+                    Text(
+                        periodDetailViewModel.period.name,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 30.sp
+                    )
+                })
         },
 
         bottomBar = {
@@ -99,30 +106,40 @@ fun PeriodDetailsScreen(
                         Icon(
                             Icons.Default.Delete,
                             contentDescription = "Delete",
-                            modifier = Modifier.clickable {  }.size(30.dp))
+                            modifier = Modifier
+                                .clickable { }
+                                .size(30.dp))
                         Spacer(modifier = Modifier.width(80.dp))
-                        Icon(
-                            Icons.Default.Add,
-                            contentDescription = "Add",
-                            modifier = Modifier.clickable {  }.size(30.dp))
+                        Button(onClick = { navController.navigate(Screen.NewActivity.route+"/$periodId") }) {
+                            Icon(
+                                Icons.Default.Add,
+                                contentDescription = "Add",
+                                modifier = Modifier
+                                    .size(30.dp)
+                            )
+                        }
+
                     }
                 })
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {showedChat = true }) {
+            FloatingActionButton(onClick = { showedChat = true }) {
                 Icon(Icons.Filled.Send, contentDescription = "Add")
             }
         }
-    ){
+    ) {
         Column(modifier = Modifier.padding(it)) {
-            Text("Infos : "  ,modifier = Modifier
-                .padding(top = 10.dp)
-                .align(Alignment.CenterHorizontally) , fontSize = 20.sp)
-            Row (modifier = Modifier.padding(  10.dp)) {
+            Text(
+                "Infos : ", modifier = Modifier
+                    .padding(top = 10.dp)
+                    .align(Alignment.CenterHorizontally), fontSize = 20.sp
+            )
+            Row(modifier = Modifier.padding(10.dp)) {
                 Column() {
                     Card(
                         colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant),
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant
+                        ),
                         modifier = Modifier
                             .fillMaxWidth(0.6f)
                             .fillMaxHeight(0.2f)
@@ -134,12 +151,12 @@ fun PeriodDetailsScreen(
                         )
                         Text(
                             " ${periodDetailViewModel.period?.afficherDate()}",
-                            modifier = Modifier.align(Alignment.CenterHorizontally) ,
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
                             fontFamily = MaterialTheme.typography.labelLarge.fontFamily,
                         )
                         Text(
                             " ${periodDetailViewModel.period?.place?.name}",
-                            modifier = Modifier.align(Alignment.CenterHorizontally) ,
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
                             fontFamily = MaterialTheme.typography.labelMedium.fontFamily,
                         )
                     }
@@ -150,26 +167,39 @@ fun PeriodDetailsScreen(
                     MeteoComp(meteoViewModel = MeteoViewModel(periodDetailViewModel.meteo))
                 }
             }
-            Text("Activities : "  ,modifier = Modifier
-                .padding(top = 10.dp)
-                .align(Alignment.CenterHorizontally) , fontSize = 20.sp)
+            Text(
+                "Activities : ", modifier = Modifier
+                    .padding(top = 10.dp)
+                    .align(Alignment.CenterHorizontally), fontSize = 20.sp
+            )
 
-            Row( modifier = Modifier.padding(10.dp)){
+            Row(modifier = Modifier.padding(10.dp)) {
                 Text("Trié par date  : ")
-                Icon(Icons.Default.KeyboardArrowUp, contentDescription = " croissant"  , Modifier.clickable { periodDetailViewModel.orderActivitiesByDate() })
-                Icon(Icons.Default.KeyboardArrowDown, contentDescription = " decroissant" , Modifier.clickable { periodDetailViewModel.orderActivitiesByDateDesc() } )
+                Icon(
+                    Icons.Default.KeyboardArrowUp,
+                    contentDescription = " croissant",
+                    Modifier.clickable { periodDetailViewModel.orderActivitiesByDate() })
+                Icon(
+                    Icons.Default.KeyboardArrowDown,
+                    contentDescription = " decroissant",
+                    Modifier.clickable { periodDetailViewModel.orderActivitiesByDateDesc() })
 
             }
-            if(periodDetailViewModel.activities.isEmpty())
-                Text("Pas encore d'activité , Qu'attendez vous ? " , modifier = Modifier.align(Alignment.CenterHorizontally) , fontSize = 20.sp)
+            if (periodDetailViewModel.activities.isEmpty())
+                Text(
+                    "Pas encore d'activité , Qu'attendez vous ? ",
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    fontSize = 20.sp
+                )
             for (activity in periodDetailViewModel.activities) {
-                ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity) )
+                ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity))
             }
         }
 
-        when  {
-            showedChat ->{
-                ModalBottomSheet(onDismissRequest = { showedChat = false } , sheetState = modalSheetState  ) {
+        when {
+            showedChat -> {
+                ModalBottomSheet(onDismissRequest = { showedChat = false },
+                    sheetState = modalSheetState) {
                     Column {
                         Text(
                             "Messages : ", modifier = Modifier
@@ -187,7 +217,8 @@ fun PeriodDetailsScreen(
                                         periodDetailViewModel.updateTempMessage(temp)
                                     },
                                     placeholder = { Text("Message") },
-                                    modifier = Modifier.fillMaxWidth(0.8f))
+                                    modifier = Modifier.fillMaxWidth(0.8f)
+                                )
                                 Button(onClick = { periodDetailViewModel.sendMessage() }) {
                                     Icon(Icons.Default.Send, contentDescription = "Envoyer")
                                 }
@@ -203,8 +234,6 @@ fun PeriodDetailsScreen(
     }
 
 }
-
-
 
 
 @Composable

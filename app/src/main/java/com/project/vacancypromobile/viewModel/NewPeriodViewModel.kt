@@ -82,7 +82,7 @@ class NewPeriodViewModel @Inject constructor(
         this.periodPlaceId = placeId
     }
 
-    fun getDatesFormatted() : String {
+    fun getDatesFormatted(): String {
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         val dateDebut = format.parse(periodStartDate)
         val dateFin = format.parse(periodEndDate)
@@ -131,8 +131,7 @@ class NewPeriodViewModel @Inject constructor(
             if (newPeriodSuccess) {
                 _newPeriodMessage.value = "Période ajoutée !"
                 clearViewModel()
-            }
-            else _newPeriodMessage.value = "Erreur lors de l'ajout de la période"
+            } else _newPeriodMessage.value = "Erreur lors de l'ajout de la période"
         }
     }
 
@@ -145,4 +144,5 @@ class NewPeriodViewModel @Inject constructor(
         periodPlaceId = ""
         _newPeriodMessage.value = ""
     }
+
 }
