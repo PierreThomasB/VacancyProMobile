@@ -64,7 +64,7 @@ fun PeriodDetailsScreen(
     periodDetailViewModel: PeriodDetailViewModel = viewModel(),
     navController: NavController = rememberNavController(),
 
-) {
+    ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
     runBlocking {
         periodDetailViewModel.init(backStackEntry.value?.arguments?.getInt("periodId") ?: 0);
@@ -156,8 +156,8 @@ fun PeriodDetailsScreen(
 
             Row( modifier = Modifier.padding(10.dp)){
                 Text("Trié par date  : ")
-                    Icon(Icons.Default.KeyboardArrowUp, contentDescription = " croissant"  , Modifier.clickable { periodDetailViewModel.orderActivitiesByDate() })
-                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = " decroissant" , Modifier.clickable { periodDetailViewModel.orderActivitiesByDateDesc() } )
+                Icon(Icons.Default.KeyboardArrowUp, contentDescription = " croissant"  , Modifier.clickable { periodDetailViewModel.orderActivitiesByDate() })
+                Icon(Icons.Default.KeyboardArrowDown, contentDescription = " decroissant" , Modifier.clickable { periodDetailViewModel.orderActivitiesByDateDesc() } )
 
             }
             if(periodDetailViewModel.activities.isEmpty())
@@ -169,31 +169,31 @@ fun PeriodDetailsScreen(
 
         when  {
             showedChat ->{
-            ModalBottomSheet(onDismissRequest = { showedChat = false } , sheetState = modalSheetState  ) {
-                Column {
-                    Text(
-                        "Messages : ", modifier = Modifier
-                            .padding(top = 10.dp)
-                            .align(Alignment.CenterHorizontally), fontSize = 20.sp
-                    )
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        for (message in periodDetailViewModel.messages) {
-                            ChatComp(ChatViewModel(message))
-                        }
-                        Row(Modifier.padding(8.dp)) {
-                            OutlinedTextField(
-                                value = periodDetailViewModel.tempMessage,
-                                onValueChange = { temp ->
-                                    periodDetailViewModel.updateTempMessage(temp)
-                                },
-                                placeholder = { Text("Message") },
-                                modifier = Modifier.fillMaxWidth(0.8f))
-                            Button(onClick = { periodDetailViewModel.sendMessage() }) {
-                                Icon(Icons.Default.Send, contentDescription = "Envoyer")
+                ModalBottomSheet(onDismissRequest = { showedChat = false } , sheetState = modalSheetState  ) {
+                    Column {
+                        Text(
+                            "Messages : ", modifier = Modifier
+                                .padding(top = 10.dp)
+                                .align(Alignment.CenterHorizontally), fontSize = 20.sp
+                        )
+                        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                            for (message in periodDetailViewModel.messages) {
+                                ChatComp(ChatViewModel(message))
+                            }
+                            Row(Modifier.padding(8.dp)) {
+                                OutlinedTextField(
+                                    value = periodDetailViewModel.tempMessage,
+                                    onValueChange = { temp ->
+                                        periodDetailViewModel.updateTempMessage(temp)
+                                    },
+                                    placeholder = { Text("Message") },
+                                    modifier = Modifier.fillMaxWidth(0.8f))
+                                Button(onClick = { periodDetailViewModel.sendMessage() }) {
+                                    Icon(Icons.Default.Send, contentDescription = "Envoyer")
+                                }
                             }
                         }
                     }
-                }
                 }
             }
 
@@ -210,6 +210,6 @@ fun PeriodDetailsScreen(
 @Composable
 @Preview
 fun PeriodDetailsScreenPreview() {
-   PeriodDetailsScreen()
+    PeriodDetailsScreen()
 
 }

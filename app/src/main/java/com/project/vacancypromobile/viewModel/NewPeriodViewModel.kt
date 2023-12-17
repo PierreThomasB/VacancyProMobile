@@ -143,5 +143,6 @@ class NewPeriodViewModel @Inject constructor(
         periodEndDate = ""
         periodPlace = ""
         periodPlaceId = ""
+        _newPeriodMessage.value = ""
     }
 }
