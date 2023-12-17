@@ -12,6 +12,7 @@ import com.project.vacancypromobile.viewModel.HomeViewModel
 import com.project.vacancypromobile.viewModel.LoginViewModel
 import com.project.vacancypromobile.viewModel.MainViewModel
 import com.project.vacancypromobile.viewModel.NewPeriodViewModel
+import com.project.vacancypromobile.viewModel.PeriodDetailViewModel
 import com.project.vacancypromobile.viewModel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
     private val registerViewModel: RegisterViewModel by viewModels()
     private val newPeriodViewModel: NewPeriodViewModel by viewModels()
     private val homeViewModel: HomeViewModel by viewModels()
+    private val periodDetailViewModel: PeriodDetailViewModel by viewModels()
 
     private lateinit var navController: NavHostController
     private lateinit var placesClient : PlacesClient;
@@ -35,7 +37,8 @@ class MainActivity : ComponentActivity() {
                 loginViewModel = loginViewModel,
                 registerViewModel = registerViewModel,
                 newPeriodViewModel = newPeriodViewModel,
-                homeViewModel =  homeViewModel
+                homeViewModel =  homeViewModel,
+                periodDetailViewModel = periodDetailViewModel,
             )
             mainViewModel.loadUser()
             val user = mainViewModel.getCurrentUser()

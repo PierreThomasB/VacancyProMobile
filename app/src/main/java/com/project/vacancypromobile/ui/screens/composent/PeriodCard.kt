@@ -4,7 +4,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,10 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -38,10 +37,10 @@ fun PeriodCard(periodViewModel: PeriodViewModel  , onClick: () -> Unit){
             .padding(16.dp)
             .background(Color.White)
             .clip(RoundedCornerShape(8.dp))
-            .clickable { }
+            .clickable { onClick()}
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
+        Card(
+
         ) {
             Column(
                 modifier = Modifier
@@ -65,7 +64,7 @@ fun PeriodCard(periodViewModel: PeriodViewModel  , onClick: () -> Unit){
                            text = "${periodViewModel.description}",
                        )
                        Text(
-                           text = "${periodViewModel.beginDate} -> ${periodViewModel.endDate}",
+                           text = "${periodViewModel.date}",
                        )
                    }
                 }
@@ -83,5 +82,5 @@ fun PeriodCard(periodViewModel: PeriodViewModel  , onClick: () -> Unit){
 @Composable
 @Preview
 fun LoginScreenPreview() {
-    PeriodCard( onClick =  ({}) , periodViewModel = PeriodViewModel(Period(-1 , name = "Ludwig", description = "Salut " , beginDate = Date() , endDate = Date() , Place(id= "-1" , name = "Salut", urlPhoto = "AWU5eFiPT2gyC49KbvhLd7QvNW9aRTZNhciegQsbu0B6A4Ybiu_o_CODKq4rcYeSdAJCxSYk-j74yLa6ck8JL3OzrbMibzERPJ1j1xNhMdu2UG7M2_GuzieoPuyEItExKE-wDSsg0VVSfsHuY1Zho2piZgu-l-qJEuSIBi6hitY0GBCn7BHm" ), emptyList())));
+    PeriodCard( onClick =  ({}) , periodViewModel = PeriodViewModel(Period(-1 , name = "Ludwig", description = "Salut " , beginDate = Date() , endDate = Date() , Place(id= "-1" , name = "Salut", urlPhoto = "AWU5eFiPT2gyC49KbvhLd7QvNW9aRTZNhciegQsbu0B6A4Ybiu_o_CODKq4rcYeSdAJCxSYk-j74yLa6ck8JL3OzrbMibzERPJ1j1xNhMdu2UG7M2_GuzieoPuyEItExKE-wDSsg0VVSfsHuY1Zho2piZgu-l-qJEuSIBi6hitY0GBCn7BHm" ) , emptyList())))
 }

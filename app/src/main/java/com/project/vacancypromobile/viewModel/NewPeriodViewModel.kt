@@ -9,10 +9,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.Place
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
 import javax.inject.Inject
 
 
+@HiltViewModel
 class NewPeriodViewModel @Inject constructor()   : ViewModel(){
 
 

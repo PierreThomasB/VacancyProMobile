@@ -1,10 +1,23 @@
 package com.project.vacancypromobile.models
 
-data class Activity (
-    val id: Int,
-    val name: String,
-    val description: String,
-    val startDate: String,
-    val endDate: String,
-    val place: Place,
-)
+import java.util.Calendar
+import java.util.Date
+
+  class Activity (
+     val id: Int = 0 ,
+     val name: String,
+     val description: String,
+     override val beginDate: Date,
+     override val endDate: Date,
+     val place: Place,
+  ) : HasPeriodDates{
+
+     fun convertDateToCalendar(date: Date): Calendar {
+        val cal = Calendar.getInstance()
+        cal.time = date
+        return cal
+     }
+
+  }
+
+

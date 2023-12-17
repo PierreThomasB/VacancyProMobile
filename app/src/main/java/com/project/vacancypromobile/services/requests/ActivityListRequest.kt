@@ -17,4 +17,5 @@ data class ActivityListRequest (
     @SerializedName("place")
     val place : Place,
 
+
 )
