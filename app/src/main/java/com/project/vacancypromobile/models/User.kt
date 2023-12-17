@@ -13,5 +13,6 @@ data class User(
     @SerializedName("isAdmin")
     val isAdmin: Boolean = false,
     @SerializedName("token")
-    val token: String = ""
+    val token: String = "",
+
 )

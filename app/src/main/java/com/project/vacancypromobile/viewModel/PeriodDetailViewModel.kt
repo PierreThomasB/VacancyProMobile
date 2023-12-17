@@ -42,7 +42,6 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
     }
 
     private fun initReadingMessage() {
-        val channelStr  = "channel_"+period.id
         val options = PusherOptions()
         options.setCluster("eu");
         val pusher = Pusher("74f1716b51dbbc6c19ca", options)
@@ -57,11 +56,13 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
             ) {
             }
         }, ConnectionState.ALL)
-        val channel = pusher.subscribe(channelStr)
+        val channel = pusher.subscribe("channel_"+period.id)
         channel.bind("my-event") { event ->
             val data = Gson().fromJson(event.data , ChatReceiveRequest::class.java);
-            val message = Message(id = -1 , message = data.message , channel = channelStr , userName = "Pipi Thomas" , date = data.date )
-            messages = messages + message
+            val message = Message(id = data.id , message = data.message , channel = data.channel , userName = "Pipi Thomas" , date = data.date )
+            if(chatRepository.addReceivedMessage(message)) {
+                messages = messages + message
+            }
             Log.i("Pusher","Received event with data: $message")
         }
     }
@@ -95,6 +96,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
             val user = userRepository.getCurrentUser();
             if(user != null) {
                 chatRepository.sendMessage(tempMessage, user)
+                tempMessage = ""
             }
         }
     }

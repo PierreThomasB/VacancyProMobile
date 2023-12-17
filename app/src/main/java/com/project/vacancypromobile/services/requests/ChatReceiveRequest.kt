@@ -10,6 +10,8 @@ data class ChatReceiveRequest (
     val message : String,
     @SerializedName("Date")
     val date : Date,
+    @SerializedName("Channel")
+    val channel : String
 
 
     )
