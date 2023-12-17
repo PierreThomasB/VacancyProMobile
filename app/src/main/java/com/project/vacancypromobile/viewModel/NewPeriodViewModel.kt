@@ -33,6 +33,8 @@ class NewPeriodViewModel @Inject constructor(
 
     private val _newPeriodMessage = MutableLiveData<String>()
     val newPeriodMessage: MutableLiveData<String> get() = _newPeriodMessage
+
+
     var newPeriodSuccess = false
 
     var periodName by mutableStateOf("")
@@ -80,6 +82,14 @@ class NewPeriodViewModel @Inject constructor(
         this.periodPlaceId = placeId
     }
 
+    fun getDatesFormatted() : String {
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+        val dateDebut = format.parse(periodStartDate)
+        val dateFin = format.parse(periodEndDate)
+        val format2 = SimpleDateFormat("dd-MM-yyyy")
+        return format2.format(dateDebut) + " -> " + format2.format(dateFin)
+    }
+
     private fun verifyData(): Boolean {
         if (periodName.isEmpty()) {
             _newPeriodMessage.value = "Nom manquant"
@@ -87,6 +97,10 @@ class NewPeriodViewModel @Inject constructor(
         }
         if (periodDescription.isEmpty()) {
             _newPeriodMessage.value = "Description manquante"
+            return false
+        }
+        if (periodPlace.isEmpty()) {
+            _newPeriodMessage.value = "Lieu manquant"
             return false
         }
         if (periodStartDate.isEmpty()) {
@@ -97,10 +111,7 @@ class NewPeriodViewModel @Inject constructor(
             _newPeriodMessage.value = "Date de fin manquante"
             return false
         }
-        if (periodPlace.isEmpty()) {
-            _newPeriodMessage.value = "Lieu manquant"
-            return false
-        }
+
         return true
     }
 
@@ -116,17 +127,21 @@ class NewPeriodViewModel @Inject constructor(
                 place = Place(periodPlace, periodPlaceId, "null"),
                 users = emptyList<User>()
             )
-            val period = Period(
-                name = periodName,
-                description = periodDescription,
-                beginDate = Date(),
-                endDate = Date(),
-                place = Place(periodPlace, periodPlaceId, "null"),
-                activities = emptyList()
-            )
             newPeriodSuccess = periodRepository.createPeriod(request);
-            if (newPeriodSuccess) _newPeriodMessage.value = "Période créée !"
-            else _newPeriodMessage.value = "Période non créée"
+            if (newPeriodSuccess) {
+                _newPeriodMessage.value = "Période ajoutée !"
+                clearViewModel()
+            }
+            else _newPeriodMessage.value = "Erreur lors de l'ajout de la période"
         }
+    }
+
+    private fun clearViewModel() {
+        periodName = ""
+        periodDescription = ""
+        periodStartDate = ""
+        periodEndDate = ""
+        periodPlace = ""
+        periodPlaceId = ""
     }
 }

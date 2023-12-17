@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -53,6 +54,7 @@ fun NewPeriodScreen(
             }
         }
         Scaffold(
+            snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
                 CenterAlignedTopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -104,7 +106,7 @@ fun NewPeriodScreen(
                     )
                     if (newPeriodViewModel.periodStartDate != "" && newPeriodViewModel.periodEndDate != "") {
                         Text(
-                            text = "Date sélectionnée : " + newPeriodViewModel.periodStartDate + " -> " + newPeriodViewModel.periodEndDate,
+                            text = "Date sélectionnée : " + newPeriodViewModel.getDatesFormatted(),
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                     }

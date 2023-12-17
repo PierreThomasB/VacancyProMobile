@@ -16,7 +16,7 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
     suspend fun createPeriod(request: PeriodRequest): Boolean {
         val response = apiService.createPeriod(request)
         if (response.isSuccessful && response.body() != null) {
-            //_periods.add(request)
+            _periods.add(response.body()!!)
             Log.d("Period", "Period created")
         } else {
             Log.d("Period", "Period not created")

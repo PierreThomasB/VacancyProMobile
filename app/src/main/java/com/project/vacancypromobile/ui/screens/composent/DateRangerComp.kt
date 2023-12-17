@@ -25,42 +25,42 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-    fun DateRangeComp(
-        modifier: Modifier = Modifier,
-        selectStartDate: (String) -> Unit = {},
-        selectEndDate: (String) -> Unit = {},
-    ) {
-        val calendar = Calendar.getInstance()
-        calendar.set(2023, 11, 6) // year, month, date
+fun DateRangeComp(
+    modifier: Modifier = Modifier,
+    selectStartDate: (String) -> Unit = {},
+    selectEndDate: (String) -> Unit = {},
+) {
+    val calendar = Calendar.getInstance()
+    calendar.set(2023, 11, 6) // year, month, date
 
-        var startDate by remember {
-            mutableLongStateOf(calendar.timeInMillis) // or use mutableStateOf(calendar.timeInMillis)
-        }
+    var startDate by remember {
+        mutableLongStateOf(calendar.timeInMillis) // or use mutableStateOf(calendar.timeInMillis)
+    }
 
-        calendar.set(2023, 11, 6) // year, month, date
+    calendar.set(2023, 11, 6) // year, month, date
 
-        var endDate by remember {
-            mutableLongStateOf(calendar.timeInMillis) // or use mutableStateOf(calendar.timeInMillis)
-        }
+    var endDate by remember {
+        mutableLongStateOf(calendar.timeInMillis) // or use mutableStateOf(calendar.timeInMillis)
+    }
 
-        // set the initial dates
-        val dateRangePickerState = rememberDateRangePickerState(
-            initialSelectedStartDateMillis = startDate,
-            initialSelectedEndDateMillis = endDate
-        )
+    // set the initial dates
+    val dateRangePickerState = rememberDateRangePickerState(
+        initialSelectedStartDateMillis = startDate,
+        initialSelectedEndDateMillis = endDate
+    )
 
-        var showDateRangePicker by remember {
-            mutableStateOf(false)
-        }
+    var showDateRangePicker by remember {
+        mutableStateOf(false)
+    }
 
-        if (showDateRangePicker) {
-            DatePickerDialog(
-                onDismissRequest = {
-                    showDateRangePicker = false
-                },
-                confirmButton = {
-                    TextButton(onClick = {
-
+    if (showDateRangePicker) {
+        DatePickerDialog(
+            onDismissRequest = {
+                showDateRangePicker = false
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    if (dateRangePickerState.selectedStartDateMillis != null && dateRangePickerState.selectedEndDateMillis != null) {
                         showDateRangePicker = false
                         val startDateTemp = dateRangePickerState.selectedStartDateMillis!!
                         val endDateTemp = dateRangePickerState.selectedEndDateMillis!!
@@ -68,41 +68,42 @@ import java.util.Locale
                         val dateDebut = convertDate(startDateTemp)
                         val dateFin = convertDate(endDateTemp)
 
-                        selectEndDate(dateDebut);
-                        selectStartDate(dateFin);
+                        selectStartDate(dateDebut)
+                        selectEndDate(dateFin)
+                    }
 
-                    }) {
-                        Text(text = "Confirm")
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = {
-                        showDateRangePicker = false
-                    }) {
-                        Text(text = "Cancel")
-                    }
+                }) {
+                    Text(text = "Confirm")
                 }
-            ) {
-                DateRangePicker(
-                    state = dateRangePickerState,
-                    modifier = Modifier.height(height = 500.dp) ,
-                )
-            }
-        }
-
-        Button(
-            onClick = {
-                showDateRangePicker = true
             },
-            modifier = modifier,
+            dismissButton = {
+                TextButton(onClick = {
+                    showDateRangePicker = false
+                }) {
+                    Text(text = "Cancel")
+                }
+            }
         ) {
-            Text(text = "Ajouter les dates")
+            DateRangePicker(
+                state = dateRangePickerState,
+                modifier = Modifier.height(height = 500.dp),
+            )
         }
     }
 
+    Button(
+        onClick = {
+            showDateRangePicker = true
+        },
+        modifier = modifier,
+    ) {
+        Text(text = "Ajouter les dates")
+    }
+}
+
 
 fun convertDate(dateInMillis: Long): String {
-    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
     val calendar = Calendar.getInstance();
     calendar.timeInMillis = dateInMillis;
     return (formatter.format(Date(calendar.timeInMillis)));
