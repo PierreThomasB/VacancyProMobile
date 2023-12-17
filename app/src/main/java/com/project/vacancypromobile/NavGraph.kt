@@ -4,15 +4,19 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.project.vacancypromobile.ui.screens.HomeScreen
 import com.project.vacancypromobile.ui.screens.LoginScreen
 import com.project.vacancypromobile.ui.screens.NewPeriodScreen
+import com.project.vacancypromobile.ui.screens.PeriodDetailsScreen
 import com.project.vacancypromobile.ui.screens.Screen
 import com.project.vacancypromobile.viewModel.HomeViewModel
 import com.project.vacancypromobile.viewModel.LoginViewModel
 import com.project.vacancypromobile.viewModel.NewPeriodViewModel
+import com.project.vacancypromobile.viewModel.PeriodDetailViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -20,7 +24,8 @@ fun SetupNavGraph(
     navController: NavHostController,
     loginViewModel: LoginViewModel,
     newPeriodViewModel: NewPeriodViewModel,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    periodDetailViewModel: PeriodDetailViewModel,
 ) {
     NavHost(
         navController = navController,
@@ -30,6 +35,7 @@ fun SetupNavGraph(
         composable(route = Screen.Login.route){LoginScreen(loginViewModel, navController)}
         composable(route = Screen.CreatePeriod.route){ NewPeriodScreen(newPeriodViewModel, navController) }
         composable(route = Screen.Period.route){ NewPeriodScreen(newPeriodViewModel, navController) }
+        composable(route = Screen.PeriodDetails.route , arguments = listOf(navArgument("periodId") { type = NavType.IntType })){ PeriodDetailsScreen(periodDetailViewModel , navController) }
 
     }
 }

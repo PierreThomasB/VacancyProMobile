@@ -16,9 +16,9 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.project.vacancypromobile.datas.PeriodRepository
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.Place
+import dagger.hilt.android.lifecycle.HiltViewModel
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.requests.PeriodRequest
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date

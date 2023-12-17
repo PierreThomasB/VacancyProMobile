@@ -1,5 +1,6 @@
 package com.project.vacancypromobile.ui.screens
 
+import android.util.Log
 import android.app.Activity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -56,7 +58,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
             Column(
                 modifier = Modifier.padding(innerPadding),
             ) {
-                Text(text = "Vos Vacances en un clic !")
+                Text(text = "Vos Vacances en un clic !" , modifier = Modifier.align(Alignment.CenterHorizontally) , fontSize = 25.sp)
 
                 if (homeViewModel.periods.isEmpty()) {
                     Text(text = "Aucune période n'est disponible")
@@ -64,7 +66,8 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
                     for (period in homeViewModel.periods) {
                         PeriodCard(periodViewModel = PeriodViewModel(period) ,
                             onClick = {
-                            navController.navigate("period/${period.id}")
+                                Log.d("Period", "Period clicked + ${period.id}")
+                                navController.navigate("period_details_screen/"+period.id)
                         })
                     }
                 }
