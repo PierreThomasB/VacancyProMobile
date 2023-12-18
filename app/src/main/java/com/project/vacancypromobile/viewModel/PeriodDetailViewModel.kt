@@ -41,11 +41,12 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         }
     }
 
+    private var pusher : Pusher? = null
     private fun initReadingMessage() {
         val options = PusherOptions()
         options.setCluster("eu");
-        val pusher = Pusher("74f1716b51dbbc6c19ca", options)
-        pusher.connect(object : ConnectionEventListener {
+        pusher = Pusher("74f1716b51dbbc6c19ca", options)
+        pusher!!.connect(object : ConnectionEventListener {
             override fun onConnectionStateChange(change: ConnectionStateChange) {
                 Log.i("Pusher", "State changed from ${change.previousState} to ${change.currentState}")
             }
@@ -56,7 +57,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
             ) {
             }
         }, ConnectionState.ALL)
-        val channel = pusher.subscribe("channel_"+period.id)
+        val channel = pusher!!.subscribe("channel_"+period.id)
         channel.bind("my-event") { event ->
             val data = Gson().fromJson(event.data , ChatReceiveRequest::class.java);
             val message = Message(id = data.id , message = data.message , channel = data.channel , userName = "Pipi Thomas" , date = data.date )
@@ -67,6 +68,10 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         }
     }
 
+
+    fun dispose(){
+        pusher?.disconnect()
+    }
 
     var meteo by mutableStateOf(Meteo("","","",""))
     var activities by mutableStateOf(emptyList<Activity>())
@@ -103,7 +108,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
 
 
     private suspend fun getPeriodDetails(id : Int)  {
-        period = periodRepository.getPeriod(id)!!;
+        period = periodRepository.getPeriodDetails(id)!!;
         val resp =  activityRepository.getActivitiesByPeriod(id)
         if(resp != null) {
             activities = resp

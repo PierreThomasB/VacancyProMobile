@@ -1,29 +1,23 @@
 package com.project.vacancypromobile.datas
 
 import android.util.Log
+import com.project.vacancypromobile.datas.interfaces.periods.CanGetAllPeriods
+import com.project.vacancypromobile.datas.interfaces.periods.CanGetPeriodDetails
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.services.ApiService
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
-class PeriodRepository @Inject constructor(private  val apiService: ApiService) : Serializable {
+class PeriodRepository @Inject constructor(private  val apiService: ApiService)  : Serializable,
+    CanGetAllPeriods, CanGetPeriodDetails {
 
 
     private val _periods = mutableMapOf<Int, Period>()
 
-    suspend fun createPeriod(request: Period) {
-        val response = apiService.createPeriod(request)
-        if (response.isSuccessful && response.body() != null) {
-
-            Log.d("Period", "Period created")
-        } else {
-            Log.d("Period", "Period not created")
-        }
-    }
 
 
-    suspend fun getAllPeriod(): List<Period> {
+    override suspend fun getAllPeriods(): List<Period> {
         _periods.clear();
         val response = apiService.getAllPeriod()
         if (response.isSuccessful && response.body() != null) {
@@ -40,7 +34,7 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
     }
 
 
-     fun getPeriod(id : Int) : Period? {
+     override fun getPeriodDetails(id : Int) : Period? {
         if(_periods.isEmpty() || !_periods.containsKey(id)) {
            return null
         }

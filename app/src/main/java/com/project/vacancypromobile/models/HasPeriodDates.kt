@@ -3,7 +3,7 @@ package com.project.vacancypromobile.models
 import java.text.SimpleDateFormat
 import java.util.Date
 
-interface HasPeriodDates {
+ interface HasPeriodDates {
 
      val beginDate : Date
 

@@ -33,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,6 +76,11 @@ fun PeriodDetailsScreen(
         skipPartiallyExpanded = true,
     )
 
+    DisposableEffect(Unit) {
+        onDispose {
+            periodDetailViewModel.dispose()
+        }
+    }
 
 
 

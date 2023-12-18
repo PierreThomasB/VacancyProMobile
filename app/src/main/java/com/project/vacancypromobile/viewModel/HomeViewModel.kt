@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
 
     }
     suspend fun getPeriods() {
-        periods = periodRepository.getAllPeriod()
+        periods = periodRepository.getAllPeriods()
     }
 
 
