@@ -36,7 +36,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         if(id != 0 ) {
             runBlocking {
                 getPeriodDetails(id)
-                getMeteoInfos()
+                //getMeteoInfos()
                 getMessages()
             }
             initReadingMessage()
@@ -68,8 +68,8 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
             Log.i("Pusher","Received event with data: $message")
         }
     }
-
-
+    private val _addUserMessage = MutableLiveData<String>()
+    val addUserMessage: MutableLiveData<String> get() = _addUserMessage
     var users by mutableStateOf(emptyMap<String, User>())
     var userIdToAdd by mutableStateOf("")
     var meteo by mutableStateOf(Meteo("","","",""))
@@ -77,7 +77,6 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
     var period by mutableStateOf(Period(0,"","", Date(),Date(), Place("0","",""), emptyList()))
     var messages by mutableStateOf(emptyList<Message>())
     var tempMessage by mutableStateOf("")
-    val predictions = MutableLiveData<List<String>>()
 
 
     fun updateTempMessage(temp : String ){
@@ -134,7 +133,12 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
 
     suspend fun addUserToPeriod() {
         if (userIdToAdd.isNotEmpty()) {
-            val resp = periodRepository.addUserToPeriod(userIdToAdd, period.id)
+            periodRepository.addUserToPeriod(userIdToAdd, period.id)
+            /*if (resp) {
+                _addUserMessage.value = "Utilisateur ajouté"
+            } else {
+                _addUserMessage.value = "Utilisateur non ajouté"
+            }*/
         }
 
     }

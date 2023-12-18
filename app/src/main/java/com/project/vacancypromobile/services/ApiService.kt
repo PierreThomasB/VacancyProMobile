@@ -69,6 +69,6 @@ interface ApiService {
     suspend fun createActivity(@Body request: ActivityRequest): Response<Activity>
 
     @PUT("/api/Period/AddUser")
-    suspend fun addUserToPeriod(@Query("userId") userId: String, @Query("Period") periodId: Int): Response<Any>
+    suspend fun addUserToPeriod(@Query("userId") userId: String, @Query("Period") periodId: Int)
 
 }

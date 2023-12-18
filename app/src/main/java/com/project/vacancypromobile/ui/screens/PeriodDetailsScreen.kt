@@ -33,11 +33,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -73,6 +77,7 @@ fun PeriodDetailsScreen(
     runBlocking {
         periodDetailViewModel.init(backStackEntry.value?.arguments?.getInt("periodId") ?: 0);
     }
+    val addUserMessage by periodDetailViewModel.addUserMessage.observeAsState()
     val periodId = backStackEntry.value?.arguments?.getInt("periodId") ?: 0
     var showedChat by remember { mutableStateOf(false) }
     var showedAddUser by remember {mutableStateOf(false)}
@@ -81,9 +86,12 @@ fun PeriodDetailsScreen(
         skipPartiallyExpanded = true,
     )
 
-
-
-
+    val snackbarHostState = remember { SnackbarHostState() }
+    if (!addUserMessage.isNullOrEmpty()) {
+        LaunchedEffect(addUserMessage) {
+            snackbarHostState.showSnackbar(message = addUserMessage!!, duration = SnackbarDuration.Short)
+        }
+    }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -225,16 +233,6 @@ fun PeriodDetailsScreen(
                         )
                         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                             UserAutocompleteTextField(viewModel = periodDetailViewModel, modifier = Modifier.fillMaxWidth())
-                            /*for (user in periodDetailViewModel.users) {
-                                Row {
-                                    Text(user)
-                                    IconButton(onClick = {
-                                        periodDetailViewModel.updateUserToAdd(user)
-                                    }) {
-                                        Icon(Icons.Default.Add, contentDescription = "Add")
-                                    }
-                                }
-                            }*/
                         }
                     }
 
