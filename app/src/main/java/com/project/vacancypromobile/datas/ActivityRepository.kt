@@ -1,27 +1,28 @@
 package com.project.vacancypromobile.datas
 
+import android.util.Log
 import com.project.vacancypromobile.models.Activity
 import com.project.vacancypromobile.services.ApiService
+import com.project.vacancypromobile.services.requests.ActivityRequest
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
-class ActivityRepository @Inject constructor(private  val apiService: ApiService) : Serializable {
-
+class ActivityRepository @Inject constructor(private val apiService: ApiService) : Serializable {
 
 
     private val activities = mutableMapOf<Int, Activity>()
 
-    suspend fun getActivitiesByPeriod(id : Int) : List<Activity>? {
+    suspend fun getActivitiesByPeriod(id: Int): List<Activity>? {
         activities.clear();
         val resp = apiService.getActivitiesByPeriod(id)
-        if(resp.isSuccessful && resp.body() != null) {
+        if (resp.isSuccessful && resp.body() != null) {
             val body = resp.body()
             val activities = mutableListOf<Activity>()
             val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
             body?.forEach { activity ->
 
-                val act =  Activity(
+                val act = Activity(
                     id = activity.id,
                     name = activity.name,
                     description = activity.description,
@@ -37,6 +38,15 @@ class ActivityRepository @Inject constructor(private  val apiService: ApiService
         return emptyList();
     }
 
+    suspend fun createActivity(request: ActivityRequest): Boolean {
+        val resp = apiService.createActivity(request)
+        if (resp.isSuccessful && resp.body() != null) {
+            Log.d("Period", "Period created")
+        } else {
+            Log.d("Period", "Period not created")
+        }
+        return resp.isSuccessful
+    }
 
 
 }

@@ -29,7 +29,7 @@ import java.util.Date
 
 
 @Composable
-fun PeriodCard(periodViewModel: PeriodViewModel  , onClick: () -> Unit){
+fun PeriodCard(periodViewModel: PeriodViewModel, onClick: () -> Unit){
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxWidth()

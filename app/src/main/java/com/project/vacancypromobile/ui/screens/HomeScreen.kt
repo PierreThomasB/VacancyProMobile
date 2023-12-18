@@ -1,12 +1,19 @@
 package com.project.vacancypromobile.ui.screens
 
 import android.util.Log
+import android.app.Activity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -14,12 +21,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.project.vacancypromobile.ui.screens.composent.NavBar
 import com.project.vacancypromobile.ui.screens.composent.PeriodCard
 import com.project.vacancypromobile.ui.theme.VacancypromobileTheme
 import com.project.vacancypromobile.viewModel.HomeViewModel
@@ -31,10 +40,10 @@ import kotlinx.coroutines.runBlocking
 
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHostController = rememberNavController()) {
     homeViewModel.loadCurrentUser()
+    val activity = (LocalContext.current as? Activity)
     if(homeViewModel.getUser().username != null) {
         runBlocking { homeViewModel.getPeriods() }
     }
-
     VacancypromobileTheme {
         Scaffold(
             topBar = {
@@ -43,7 +52,8 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                     title = { Text("Vacancy Pro") })
-            }
+            },
+            bottomBar = { NavBar(navController = navController) }
         ) { innerPadding ->
             Column(
                 modifier = Modifier.padding(innerPadding),
@@ -72,6 +82,12 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
                         modifier = Modifier.padding(20.dp),
                     ) {
                         Text(text = homeViewModel.getUser().username)
+                        Button(onClick = { homeViewModel.logout(activity)  }) {
+                            Row {
+                                Icon(Icons.Outlined.Lock, contentDescription = "Localized description")
+                                Text(text = "Logout")
+                            }
+                        }
                     }
                 }
 

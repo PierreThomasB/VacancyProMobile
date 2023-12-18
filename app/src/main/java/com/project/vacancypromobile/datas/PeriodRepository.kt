@@ -5,6 +5,7 @@ import com.project.vacancypromobile.datas.interfaces.periods.CanGetAllPeriods
 import com.project.vacancypromobile.datas.interfaces.periods.CanGetPeriodDetails
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.services.ApiService
+import com.project.vacancypromobile.services.requests.PeriodRequest
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import javax.inject.Inject
@@ -15,7 +16,15 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
 
     private val _periods = mutableMapOf<Int, Period>()
 
-
+    suspend fun createPeriod(request: PeriodRequest): Boolean {
+        val response = apiService.createPeriod(request)
+        if (response.isSuccessful && response.body() != null) {
+            Log.d("Period", "Period created")
+        } else {
+            Log.d("Period", "Period not created")
+        }
+        return response.isSuccessful
+    }
 
     override suspend fun getAllPeriods(): List<Period> {
         _periods.clear();
@@ -41,7 +50,9 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
         return _periods[id]
     }
 
-
+    suspend fun addUserToPeriod(userId: String, periodId: Int) {
+        apiService.addUserToPeriod(userId, periodId)
+    }
 
 
 }

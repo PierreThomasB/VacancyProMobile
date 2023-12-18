@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.project.vacancypromobile.datas.ActivityRepository
@@ -16,6 +17,7 @@ import com.project.vacancypromobile.models.Message
 import com.project.vacancypromobile.models.Meteo
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.Place
+import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.requests.ChatReceiveRequest
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
@@ -73,6 +75,10 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         pusher?.disconnect()
     }
 
+    private val _addUserMessage = MutableLiveData<String>()
+    val addUserMessage: MutableLiveData<String> get() = _addUserMessage
+    var users by mutableStateOf(emptyMap<String, User>())
+    var userIdToAdd by mutableStateOf("")
     var meteo by mutableStateOf(Meteo("","","",""))
     var activities by mutableStateOf(emptyList<Activity>())
     var period by mutableStateOf(Period(0,"","", Date(),Date(), Place("0","",""), emptyList()))
@@ -131,6 +137,21 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         }
     }
 
+    fun updateUserToAdd(userId: String) {
+        this.userIdToAdd = userId
+    }
+
+    suspend fun addUserToPeriod() {
+        if (userIdToAdd.isNotEmpty()) {
+            periodRepository.addUserToPeriod(userIdToAdd, period.id)
+            /*if (resp) {
+                _addUserMessage.value = "Utilisateur ajouté"
+            } else {
+                _addUserMessage.value = "Utilisateur non ajouté"
+            }*/
+        }
+
+    }
 
 
 }
