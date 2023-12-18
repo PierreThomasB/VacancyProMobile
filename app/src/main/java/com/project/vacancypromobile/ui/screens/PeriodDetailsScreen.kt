@@ -1,5 +1,6 @@
 package com.project.vacancypromobile.ui.screens
 
+import UserAutocompleteTextField
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -7,12 +8,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -25,6 +28,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -71,6 +75,7 @@ fun PeriodDetailsScreen(
     }
     val periodId = backStackEntry.value?.arguments?.getInt("periodId") ?: 0
     var showedChat by remember { mutableStateOf(false) }
+    var showedAddUser by remember {mutableStateOf(false)}
 
     val modalSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
@@ -80,7 +85,6 @@ fun PeriodDetailsScreen(
 
 
     Scaffold(
-
         topBar = {
             CenterAlignedTopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -110,7 +114,7 @@ fun PeriodDetailsScreen(
                                 .clickable { }
                                 .size(30.dp))
                         Spacer(modifier = Modifier.width(80.dp))
-                        Button(onClick = { navController.navigate(Screen.NewActivity.route+"/$periodId") }) {
+                        Button(onClick = { navController.navigate(Screen.NewActivity.route + "/$periodId") }) {
                             Icon(
                                 Icons.Default.Add,
                                 contentDescription = "Add",
@@ -118,6 +122,19 @@ fun PeriodDetailsScreen(
                                     .size(30.dp)
                             )
                         }
+                        Spacer(modifier = Modifier.width(80.dp))
+                        Button(onClick = { showedAddUser = true }) {
+                            Icon(
+                                Icons.Default.AccountCircle,
+                                contentDescription = "Add",
+                                modifier = Modifier
+                                    .size(30.dp)
+                            )
+                        }
+                        // Icon(
+                        //     Icons.Default.AccountCircle,
+                        //     contentDescription = " Ajouter un utilisateur",
+                        //     Modifier.clickable { showedAddUser = true })
 
                     }
                 })
@@ -195,11 +212,42 @@ fun PeriodDetailsScreen(
                 ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity))
             }
         }
+        when {
+            showedAddUser -> {
+                ModalBottomSheet(
+                    onDismissRequest = { showedAddUser = false },
+                ) {
+                    Column(modifier = Modifier.padding(20.dp).heightIn(min = 400.dp)) {
+                        Text(
+                            "Ajouter un utilisateur : ", modifier = Modifier
+                                .padding(top = 10.dp)
+                                .align(Alignment.CenterHorizontally), fontSize = 20.sp
+                        )
+                        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                            UserAutocompleteTextField(viewModel = periodDetailViewModel, modifier = Modifier.fillMaxWidth())
+                            /*for (user in periodDetailViewModel.users) {
+                                Row {
+                                    Text(user)
+                                    IconButton(onClick = {
+                                        periodDetailViewModel.updateUserToAdd(user)
+                                    }) {
+                                        Icon(Icons.Default.Add, contentDescription = "Add")
+                                    }
+                                }
+                            }*/
+                        }
+                    }
+
+                }
+            }
+        }
 
         when {
             showedChat -> {
-                ModalBottomSheet(onDismissRequest = { showedChat = false },
-                    sheetState = modalSheetState) {
+                ModalBottomSheet(
+                    onDismissRequest = { showedChat = false },
+                    sheetState = modalSheetState
+                ) {
                     Column {
                         Text(
                             "Messages : ", modifier = Modifier

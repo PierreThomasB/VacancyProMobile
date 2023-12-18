@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.project.vacancypromobile.datas.ActivityRepository
@@ -16,6 +17,7 @@ import com.project.vacancypromobile.models.Message
 import com.project.vacancypromobile.models.Meteo
 import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.Place
+import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.requests.ChatReceiveRequest
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
@@ -68,11 +70,14 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
     }
 
 
+    var users by mutableStateOf(emptyMap<String, User>())
+    var userIdToAdd by mutableStateOf("")
     var meteo by mutableStateOf(Meteo("","","",""))
     var activities by mutableStateOf(emptyList<Activity>())
     var period by mutableStateOf(Period(0,"","", Date(),Date(), Place("0","",""), emptyList()))
     var messages by mutableStateOf(emptyList<Message>())
     var tempMessage by mutableStateOf("")
+    val predictions = MutableLiveData<List<String>>()
 
 
     fun updateTempMessage(temp : String ){
@@ -87,10 +92,6 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         activities = activities.sortedByDescending { it.beginDate }
     }
 
-
-
-
-
     fun sendMessage(){
         runBlocking {
             val user = userRepository.getCurrentUser();
@@ -104,6 +105,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
 
     private suspend fun getPeriodDetails(id : Int)  {
         period = periodRepository.getPeriod(id)!!;
+        users = userRepository.loadUsers(id)
         val resp =  activityRepository.getActivitiesByPeriod(id)
         if(resp != null) {
             activities = resp
@@ -126,6 +128,16 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         }
     }
 
+    fun updateUserToAdd(userId: String) {
+        this.userIdToAdd = userId
+    }
+
+    suspend fun addUserToPeriod() {
+        if (userIdToAdd.isNotEmpty()) {
+            val resp = periodRepository.addUserToPeriod(userIdToAdd, period.id)
+        }
+
+    }
 
 
 }

@@ -1,5 +1,5 @@
-import android.app.Activity
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -10,10 +10,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.viewModel.NewActivityViewModel
 import com.project.vacancypromobile.viewModel.NewPeriodViewModel
+import com.project.vacancypromobile.viewModel.PeriodDetailViewModel
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun PeriodPlacesAutocompleteTextField(
@@ -76,6 +80,44 @@ fun ActivityPlacesAutocompleteTextField(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun UserAutocompleteTextField(
+    viewModel: PeriodDetailViewModel,
+    modifier: Modifier = Modifier,
+) {
+    var text by remember { mutableStateOf("") }
+    //var isVisible by remember { mutableStateOf(false) }
+    var isDropdownExpanded by remember { mutableStateOf(false) }
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            modifier = modifier.onFocusChanged { focusState ->
+                isDropdownExpanded = focusState.isFocused
+            },
+            value = text,
+            label = { Text(text = "Utilisateur") },
+            onValueChange = { newText ->
+                text = newText
+                //isVisible = true
+                //viewModel.getPredictions(newText)
+            })
+        if (isDropdownExpanded) {
+            viewModel.users.values.filter { it.username.contains(text, ignoreCase = true) }
+                .forEach { user: User ->
+                    TextButton(onClick = {
+                        viewModel.updateUserToAdd(user.id)
+                        text = user.username
+                        isDropdownExpanded = false
+                    }) {
+                        Text(user.username)
+                    }
+                }
+        }
+    }
+    Button(onClick = { runBlocking { viewModel.addUserToPeriod() }  }) {
+        Text(text = "Ajouter cet utilisateur")
     }
 }
 

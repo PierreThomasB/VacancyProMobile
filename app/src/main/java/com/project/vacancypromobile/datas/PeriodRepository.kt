@@ -48,7 +48,10 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
         return _periods[id]
     }
 
-
+    suspend fun addUserToPeriod(userId: String, periodId: Int): Boolean {
+        val resp = apiService.addUserToPeriod(userId, periodId)
+        return resp.isSuccessful
+    }
 
 
 }

@@ -17,7 +17,10 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ApiService {
@@ -25,7 +28,7 @@ interface ApiService {
 
     /** USERS **/
     @GET("api/User/ListUser")
-    suspend fun List() : Response<List<User>>
+    suspend fun List(@Query("periodId") periodId: Int) : Response<List<User>>
     @POST("api/User/SignIn")
     suspend fun signIn(@Body loginRequest: LoginRequest) : Response<User>
     @GET("api/User")
@@ -65,5 +68,7 @@ interface ApiService {
     @POST("/api/Activity/NewActivity")
     suspend fun createActivity(@Body request: ActivityRequest): Response<Activity>
 
+    @PUT("/api/Period/AddUser")
+    suspend fun addUserToPeriod(@Query("userId") userId: String, @Query("Period") periodId: Int): Response<Any>
 
 }
