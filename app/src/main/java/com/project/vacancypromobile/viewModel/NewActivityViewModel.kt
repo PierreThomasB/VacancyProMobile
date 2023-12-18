@@ -51,7 +51,7 @@ class NewActivityViewModel @Inject constructor(
     }
 
     private fun getPeriodDetails(id: Int) {
-        val period = periodRepository.getPeriod(id)!!
+        val period = periodRepository.getPeriodDetails(id)!!
 
         this.periodRequest = PeriodRequest(
             id = period.id,

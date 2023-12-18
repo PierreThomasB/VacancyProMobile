@@ -28,11 +28,11 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -40,7 +40,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -121,25 +120,24 @@ fun PeriodDetailsScreen(
                         Icon(
                             Icons.Default.Delete,
                             contentDescription = "Delete",
-                            modifier = Modifier.clickable {  }.size(30.dp))
+                            modifier = Modifier
+                                .clickable { }
+                                .size(30.dp))
                         Spacer(modifier = Modifier.width(80.dp))
-                        Button(onClick = { navController.navigate(Screen.NewActivity.route + "/$periodId") }) {
-                            Icon(
-                                Icons.Default.Add,
-                                contentDescription = "Add",
-                                modifier = Modifier
-                                    .size(30.dp)
-                            )
-                        }
+                        Icon(
+                            Icons.Default.Add,
+                            contentDescription = "Add user",
+                            modifier = Modifier
+                                .clickable { navController.navigate(Screen.NewActivity.route + "/$periodId") }
+                                .size(30.dp))
+
                         Spacer(modifier = Modifier.width(80.dp))
-                        Button(onClick = { showedAddUser = true }) {
-                            Icon(
-                                Icons.Default.AccountCircle,
-                                contentDescription = "Add",
-                                modifier = Modifier
-                                    .size(30.dp)
-                            )
-                        }
+                        Icon(
+                            Icons.Default.AccountCircle,
+                            contentDescription = "Add",
+                            modifier = Modifier
+                                .size(30.dp).clickable(onClick = { showedAddUser = true })
+                        )
                         // Icon(
                         //     Icons.Default.AccountCircle,
                         //     contentDescription = " Ajouter un utilisateur",
@@ -211,7 +209,9 @@ fun PeriodDetailsScreen(
                 ModalBottomSheet(
                     onDismissRequest = { showedAddUser = false },
                 ) {
-                    Column(modifier = Modifier.padding(20.dp).heightIn(min = 400.dp)) {
+                    Column(modifier = Modifier
+                        .padding(20.dp)
+                        .heightIn(min = 400.dp)) {
                         Text(
                             "Ajouter un utilisateur : ", modifier = Modifier
                                 .padding(top = 10.dp)
