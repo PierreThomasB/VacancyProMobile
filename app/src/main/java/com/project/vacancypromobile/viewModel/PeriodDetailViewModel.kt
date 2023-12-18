@@ -36,7 +36,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         if(id != 0 ) {
             runBlocking {
                 getPeriodDetails(id)
-                //getMeteoInfos()
+                getMeteoInfos()
                 getMessages()
             }
             initReadingMessage()
