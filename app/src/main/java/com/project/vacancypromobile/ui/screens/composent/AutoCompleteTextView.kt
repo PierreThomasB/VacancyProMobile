@@ -116,7 +116,10 @@ fun UserAutocompleteTextField(
                 }
         }
     }
-    Button(onClick = { runBlocking { viewModel.addUserToPeriod() }  }) {
+    Button(onClick = {
+        runBlocking { viewModel.addUserToPeriod() }
+        text = ""
+    }) {
         Text(text = "Ajouter cet utilisateur")
     }
 }
