@@ -115,6 +115,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
 
     private suspend fun getPeriodDetails(id : Int)  {
         period = periodRepository.getPeriodDetails(id)!!;
+        users = userRepository.loadUsers(id)
         val resp =  activityRepository.getActivitiesByPeriod(id)
         if(resp != null) {
             activities = resp

@@ -27,37 +27,37 @@ interface ApiService {
 
 
     /** USERS **/
-    @GET("api/User/ListUser")
+    @GET("User/ListUser")
     suspend fun List(@Query("periodId") periodId: Int) : Response<List<User>>
-    @POST("api/User/SignIn")
+    @POST("User/SignIn")
     suspend fun signIn(@Body loginRequest: LoginRequest) : Response<User>
-    @GET("api/User")
+    /*@GET("User")
     @Headers("Content-Type: application/json;charset=UTF-8")
     suspend fun fetchUser(@Header("Autorization") token: String) : Response<User>
-
-    @POST("api/Period/NewVacances")
+*/
+    @POST("Period/NewVacances")
     suspend fun createPeriod(@Body request : PeriodRequest) : Response<Period>
    // suspend fun fetchUser(@Header("Autorization") token: String) : Response<User>
-    @GET("api/User")
+    @GET("User")
     suspend fun fetchUser() : Response<User>
-    @POST("api/User/SignUp")
+    @POST("User/SignUp")
     suspend fun signUp(@Body registerRequest: RegisterRequest): Response<User>
     /** PERIODS **/
-    @GET("api/Period/PeriodByUser")
+    @GET("Period/PeriodByUser")
     suspend fun getAllPeriod() : Response<List<PeriodsResultRequest>>
-    @GET("api/Period/Period")
+    @GET("Period/Period")
     suspend fun getPeriod(@Query("id") id : Int) : Response<PeriodsResultRequest>
-    @POST("api/Period/CreatePeriod")
+    @POST("Period/CreatePeriod")
     suspend fun createPeriod(request : Period) : Response<Period>
 
 
 
     /** METEO **/
-    @GET("api/Meteo/GetMeteo")
+    @GET("Meteo/GetMeteo")
     suspend fun getMeteoInfo(@Query("lieu") ville : String) : Response<MeteoRequest>
 
     /** ACTIVITIES **/
-    @GET("api/Activity/ActivityByPeriod")
+    @GET("Activity/ActivityByPeriod")
     suspend fun getActivitiesByPeriod(@Query("id") periodId : Int) : Response<List<ActivityListRequest>>
 
     /** MESSAGES*/
@@ -65,10 +65,10 @@ interface ApiService {
     suspend fun getAllMessages(@Query("channel") channel : String) : Response<List<ChatRequest>>
     @POST("Chat/NewMessage")
     suspend fun sendMessage(@Body chatSendRequest: ChatSendRequest ) : Response<ChatRequest>
-    @POST("/api/Activity/NewActivity")
+    @POST("Activity/NewActivity")
     suspend fun createActivity(@Body request: ActivityRequest): Response<Activity>
 
-    @PUT("/api/Period/AddUser")
+    @PUT("Period/AddUser")
     suspend fun addUserToPeriod(@Query("userId") userId: String, @Query("Period") periodId: Int)
 
 }

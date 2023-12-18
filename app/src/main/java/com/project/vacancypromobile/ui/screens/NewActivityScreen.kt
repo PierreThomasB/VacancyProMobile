@@ -43,7 +43,7 @@ fun NewActivityScreen(
     periodId: String?
 ) {
     val newActivityMessage by newActivityViewModel.newActivityMessage.observeAsState()
-    VacancypromobileTheme {
+
         val snackbarHostState = remember { SnackbarHostState() }
         if (!newActivityMessage.isNullOrEmpty()) {
             LaunchedEffect(newActivityMessage) {
@@ -123,7 +123,7 @@ fun NewActivityScreen(
                 }
             }
         }
-    }
+
 }
 
 
