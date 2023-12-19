@@ -1,7 +1,6 @@
 package com.project.vacancypromobile.datas
 
 import com.project.vacancypromobile.models.Message
-import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.ApiService
 import com.project.vacancypromobile.services.requests.ChatRequest
 import com.project.vacancypromobile.services.requests.ChatSendRequest
@@ -18,14 +17,14 @@ class ChatRepository  @Inject constructor(private  val api: ApiService ): Serial
     private var currentChannel : String = "null"
     private var chat = mutableMapOf<Int , Message>();
 
-    suspend fun sendMessage(message: String, user: User): Response<ChatRequest> {
+    suspend fun sendMessage(message: String, userName: String): Response<ChatRequest> {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         dateFormat.timeZone = TimeZone.getTimeZone("UTC")
         val formattedDate = dateFormat.format(Date())
         val request = ChatSendRequest(
             message = message,
             channel = currentChannel,
-            user = user,
+            userName = userName,
             date = formattedDate
         )
         return api.sendMessage(request);

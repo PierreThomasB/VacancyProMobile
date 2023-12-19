@@ -1,6 +1,8 @@
 package com.project.vacancypromobile.datas
 
 import android.util.Log
+import com.project.vacancypromobile.datas.interfaces.periods.CanAddUserToPeriod
+import com.project.vacancypromobile.datas.interfaces.periods.CanDeletePeriods
 import com.project.vacancypromobile.datas.interfaces.periods.CanGetAllPeriods
 import com.project.vacancypromobile.datas.interfaces.periods.CanGetPeriodDetails
 import com.project.vacancypromobile.models.Period
@@ -11,7 +13,7 @@ import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 class PeriodRepository @Inject constructor(private  val apiService: ApiService)  : Serializable,
-    CanGetAllPeriods, CanGetPeriodDetails {
+    CanGetAllPeriods, CanGetPeriodDetails  , CanDeletePeriods , CanAddUserToPeriod {
 
 
     private val _periods = mutableMapOf<Int, Period>()
@@ -50,10 +52,13 @@ class PeriodRepository @Inject constructor(private  val apiService: ApiService) 
         return _periods[id]
     }
 
-    suspend fun addUserToPeriod(userId: String, periodId: Int) {
+    override suspend fun addUserToPeriod(userId: String, periodId: Int) {
         apiService.addUserToPeriod(userId, periodId)
     }
 
+    override suspend fun deletePeriod(id: Int) {
+        apiService.deletePeriod(id)
+    }
 
 
 }

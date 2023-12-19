@@ -81,6 +81,7 @@ fun PeriodDetailsScreen(
     val periodId = backStackEntry.value?.arguments?.getInt("periodId") ?: 0
     var showedChat by remember { mutableStateOf(false) }
     var showedAddUser by remember {mutableStateOf(false)}
+    var showedDeletePeriod by remember { mutableStateOf(false) }
 
     val modalSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
@@ -121,7 +122,7 @@ fun PeriodDetailsScreen(
                             Icons.Default.Delete,
                             contentDescription = "Delete",
                             modifier = Modifier
-                                .clickable { }
+                                .clickable { showedDeletePeriod = true}
                                 .size(30.dp))
                         Spacer(modifier = Modifier.width(80.dp))
                         Icon(
@@ -256,6 +257,36 @@ fun PeriodDetailsScreen(
                 }
             }
 
+        }
+        when{
+            showedDeletePeriod -> {
+                ModalBottomSheet(
+                    onDismissRequest = { showedDeletePeriod = false },
+                ) {
+                    Column(modifier = Modifier
+                        .padding(20.dp)
+                        .heightIn(min = 400.dp)) {
+                        Text(
+                            "Voulez vous vraiment supprimer cette période ? ", modifier = Modifier
+                                .padding(top = 10.dp)
+                                .align(Alignment.CenterHorizontally), fontSize = 20.sp
+                        )
+                        Row(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                            Button(onClick = { runBlocking {
+                                periodDetailViewModel.deletePeriod()
+                            }
+                                showedDeletePeriod = false
+                                }) {
+                                Text("Oui")
+                            }
+                            Button(onClick = { showedDeletePeriod = false }) {
+                                Text("Non")
+                            }
+                        }
+                    }
+
+                }
+            }
         }
 
 

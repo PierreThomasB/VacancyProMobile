@@ -30,7 +30,7 @@ import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class PeriodDetailViewModel @Inject constructor(private val activityRepository: ActivityRepository , private val periodRepository: PeriodRepository  , private val meteoRepository: MeteoRepository , private val chatRepository: ChatRepository , private val userRepository: UserRepository)  : ViewModel() {
+class PeriodDetailViewModel @Inject constructor(private val activityRepository: ActivityRepository ,private val periodRepository: PeriodRepository , private val meteoRepository: MeteoRepository , private val chatRepository: ChatRepository , private val userRepository: UserRepository)  : ViewModel() {
 
     fun init(id : Int) {
         if(id != 0 ) {
@@ -106,7 +106,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         runBlocking {
             val user = userRepository.getCurrentUser();
             if(user != null) {
-                chatRepository.sendMessage(tempMessage, user)
+                chatRepository.sendMessage(tempMessage, user.username)
                 tempMessage = ""
             }
         }
@@ -135,6 +135,12 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         if (resp != null) {
             messages = resp
 
+        }
+    }
+
+    suspend fun deletePeriod() {
+        runBlocking {
+            periodRepository.deletePeriod(period.id)
         }
     }
 

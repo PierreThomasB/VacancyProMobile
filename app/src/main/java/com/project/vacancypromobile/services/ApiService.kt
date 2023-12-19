@@ -12,6 +12,7 @@ import com.project.vacancypromobile.services.requests.PeriodRequest
 import com.project.vacancypromobile.services.requests.PeriodsResultRequest
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -38,9 +39,11 @@ interface ApiService {
 
     @POST("Period/NewVacances")
     suspend fun createPeriod(@Body request : PeriodRequest) : Response<Period>
+    @DELETE("Period/Delete")
+    abstract suspend  fun deletePeriod(@Query("id")id: Int) : Response<Any>
 
     /** METEO **/
-    @GET("Meteo/Meteo")
+    @GET("Meteo/GetMeteo")
     suspend fun getMeteoInfo(@Query("lieu") ville : String) : Response<Any>
 
     /** ACTIVITIES **/
@@ -57,5 +60,6 @@ interface ApiService {
 
     @PUT("Period/AddUser")
     suspend fun addUserToPeriod(@Query("userId") userId: String, @Query("Period") periodId: Int)
+
 
 }

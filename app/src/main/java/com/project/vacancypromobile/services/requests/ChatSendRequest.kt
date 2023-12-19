@@ -1,7 +1,6 @@
 package com.project.vacancypromobile.services.requests
 
 import com.google.gson.annotations.SerializedName
-import com.project.vacancypromobile.models.User
 
 data class ChatSendRequest (
 
@@ -11,8 +10,8 @@ data class ChatSendRequest (
     val channel : String,
     @SerializedName("Date")
     val date : String ,
-    @SerializedName("User")
-    val user : User
+    @SerializedName("UserName")
+    val userName : String
 
 
     )

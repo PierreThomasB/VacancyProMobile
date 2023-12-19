@@ -60,9 +60,11 @@ class VacancyProModule {
     @Provides
     fun provideUserRepository(tokenManager: TokenManager, apiService: ApiService): UserRepository = UserRepository(tokenManager, apiService)
 
+
     @Singleton
     @Provides
     fun providePeriodRepository(apiService: ApiService): PeriodRepository = PeriodRepository(apiService)
+
 
     @Singleton
     @Provides
