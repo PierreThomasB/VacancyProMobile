@@ -89,7 +89,8 @@ fun UserAutocompleteTextField(
     modifier: Modifier = Modifier,
 ) {
     var text by remember { mutableStateOf("") }
-    //var isVisible by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf("") }
+
     var isDropdownExpanded by remember { mutableStateOf(false) }
     Column(modifier = modifier) {
         OutlinedTextField(
@@ -100,9 +101,15 @@ fun UserAutocompleteTextField(
             label = { Text(text = "Utilisateur") },
             onValueChange = { newText ->
                 text = newText
+                errorMessage = if (newText.isEmpty()) "Ce champ ne peut être vide" else ""
                 //isVisible = true
                 //viewModel.getPredictions(newText)
-            })
+            },
+            isError = errorMessage.isNotEmpty(),
+            helperText = if (errorMessage.isNotEmpty()) {
+                { Text(errorMessage) }
+            } else null
+            )
         if (isDropdownExpanded) {
             viewModel.users.values.filter { it.username.contains(text, ignoreCase = true) }
                 .forEach { user: User ->
