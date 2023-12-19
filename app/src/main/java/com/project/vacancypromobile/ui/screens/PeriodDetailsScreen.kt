@@ -276,6 +276,7 @@ fun PeriodDetailsScreen(
                                 periodDetailViewModel.deletePeriod()
                             }
                                 showedDeletePeriod = false
+                                navController.navigate(Screen.Home.route)
                                 }) {
                                 Text("Oui")
                             }
