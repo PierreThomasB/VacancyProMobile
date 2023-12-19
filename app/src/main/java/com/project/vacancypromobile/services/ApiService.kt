@@ -8,19 +8,13 @@ import com.project.vacancypromobile.services.requests.ActivityRequest
 import com.project.vacancypromobile.services.requests.ChatRequest
 import com.project.vacancypromobile.services.requests.ChatSendRequest
 import com.project.vacancypromobile.services.requests.LoginRequest
-import com.project.vacancypromobile.services.requests.MeteoRequest
 import com.project.vacancypromobile.services.requests.PeriodRequest
 import com.project.vacancypromobile.services.requests.PeriodsResultRequest
-import com.project.vacancypromobile.services.requests.RegisterRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ApiService {
@@ -35,26 +29,19 @@ interface ApiService {
     @Headers("Content-Type: application/json;charset=UTF-8")
     suspend fun fetchUser(@Header("Autorization") token: String) : Response<User>
 */
-    @POST("Period/NewVacances")
-    suspend fun createPeriod(@Body request : PeriodRequest) : Response<Period>
-   // suspend fun fetchUser(@Header("Autorization") token: String) : Response<User>
+
     @GET("User")
     suspend fun fetchUser() : Response<User>
-    @POST("User/SignUp")
-    suspend fun signUp(@Body registerRequest: RegisterRequest): Response<User>
     /** PERIODS **/
     @GET("Period/PeriodByUser")
     suspend fun getAllPeriod() : Response<List<PeriodsResultRequest>>
-    @GET("Period/Period")
-    suspend fun getPeriod(@Query("id") id : Int) : Response<PeriodsResultRequest>
-    @POST("Period/CreatePeriod")
-    suspend fun createPeriod(request : Period) : Response<Period>
 
-
+    @POST("Period/NewVacances")
+    suspend fun createPeriod(@Body request : PeriodRequest) : Response<Period>
 
     /** METEO **/
-    @GET("Meteo/GetMeteo")
-    suspend fun getMeteoInfo(@Query("lieu") ville : String) : Response<MeteoRequest>
+    @GET("Meteo/Meteo")
+    suspend fun getMeteoInfo(@Query("lieu") ville : String) : Response<Any>
 
     /** ACTIVITIES **/
     @GET("Activity/ActivityByPeriod")
