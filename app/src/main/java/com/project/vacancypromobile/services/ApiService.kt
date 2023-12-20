@@ -57,6 +57,8 @@ interface ApiService {
     suspend fun sendMessage(@Body chatSendRequest: ChatSendRequest ) : Response<ChatRequest>
     @POST("Activity/NewActivity")
     suspend fun createActivity(@Body request: ActivityRequest): Response<Activity>
+    @PUT("Activity/UpdateActivity")
+    suspend fun updateActivity(@Body request: ActivityRequest): Response<Activity>
 
     @PUT("Period/AddUser")
     suspend fun addUserToPeriod(@Query("userId") userId: String, @Query("Period") periodId: Int)

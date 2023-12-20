@@ -48,5 +48,15 @@ class ActivityRepository @Inject constructor(private val apiService: ApiService)
         return resp.isSuccessful
     }
 
+    suspend fun updateActivity(request: ActivityRequest): Boolean {
+        val resp = apiService.updateActivity(request)
+        if (resp.isSuccessful && resp.body() != null) {
+            Log.d("Period", "Period updated")
+        } else {
+            Log.d("Period", "Period not updated")
+        }
+        return resp.isSuccessful
+    }
+
 
 }

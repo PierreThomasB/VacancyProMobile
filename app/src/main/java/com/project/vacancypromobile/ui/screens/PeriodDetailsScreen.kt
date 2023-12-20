@@ -99,8 +99,6 @@ fun PeriodDetailsScreen(
         }
     }
 
-
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -139,11 +137,6 @@ fun PeriodDetailsScreen(
                             modifier = Modifier
                                 .size(30.dp).clickable(onClick = { showedAddUser = true })
                         )
-                        // Icon(
-                        //     Icons.Default.AccountCircle,
-                        //     contentDescription = " Ajouter un utilisateur",
-                        //     Modifier.clickable { showedAddUser = true })
-
                     }
                 })
         },

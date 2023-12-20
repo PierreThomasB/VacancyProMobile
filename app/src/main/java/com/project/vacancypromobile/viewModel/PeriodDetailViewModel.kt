@@ -78,7 +78,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
     private val _addUserMessage = MutableLiveData<String>()
     val addUserMessage: MutableLiveData<String> get() = _addUserMessage
     var users by mutableStateOf(emptyMap<String, User>())
-    var userIdToAdd by mutableStateOf("")
+    private var userIdToAdd by mutableStateOf("")
     var meteo by mutableStateOf(Meteo("","","",""))
     var activities by mutableStateOf(emptyList<Activity>())
     var period by mutableStateOf(Period(0,"","", Date(),Date(), Place("0","",""), emptyList()))

@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -29,18 +28,30 @@ fun DateRangeComp(
     modifier: Modifier = Modifier,
     selectStartDate: (String) -> Unit = {},
     selectEndDate: (String) -> Unit = {},
+    beginDateStr: String = "",
+    endDateStr:String= ""
 ) {
-    val calendar = Calendar.getInstance()
-    calendar.set(2023, 11, 6) // year, month, date
+
 
     var startDate by remember {
-        mutableLongStateOf(calendar.timeInMillis) // or use mutableStateOf(calendar.timeInMillis)
+        mutableLongStateOf(0) // or use mutableStateOf(calendar.timeInMillis)
     }
-
-    calendar.set(2023, 11, 6) // year, month, date
-
     var endDate by remember {
-        mutableLongStateOf(calendar.timeInMillis) // or use mutableStateOf(calendar.timeInMillis)
+        mutableLongStateOf(0) // or use mutableStateOf(calendar.timeInMillis)
+    }
+    val calendar = Calendar.getInstance()
+    if(beginDateStr != "" && endDateStr != "") {
+
+        calendar.set(beginDateStr.substring(0,4).toInt(), beginDateStr.substring(5,7).toInt(), beginDateStr.substring(8,10).toInt())
+        startDate = calendar.timeInMillis;
+        calendar.set(endDateStr.substring(0,4).toInt(), endDateStr.substring(5,7).toInt(), endDateStr.substring(8,10).toInt())
+        endDate = calendar.timeInMillis;
+
+    }else {
+        calendar.set(2023, 11, 6)
+        startDate = calendar.timeInMillis;// year, month, date
+        calendar.set(2023, 11, 6)
+        endDate = calendar.timeInMillis;// year, month, date
     }
 
     // set the initial dates
@@ -110,11 +121,6 @@ fun convertDate(dateInMillis: Long): String {
 }
 
 
-@Composable
-@Preview
-fun DateRangerComp() {
-    DateRangeComp()
-}
 
 
 

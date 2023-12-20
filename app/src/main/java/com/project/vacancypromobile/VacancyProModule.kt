@@ -28,7 +28,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "da
 @Module
 @InstallIn(SingletonComponent::class)
 class VacancyProModule {
-    private val BASE_URL = "https://porthos-intra.cg.helmo.be/e190476/"
+    private val BASE_URL = "https://porthos-intra.cg.helmo.be/e190476/:5000"
     //private val BASE_URL = "http://10.0.2.2:5053/"
     private val client = OkHttpClient.Builder()
         .connectTimeout(100, TimeUnit.SECONDS)

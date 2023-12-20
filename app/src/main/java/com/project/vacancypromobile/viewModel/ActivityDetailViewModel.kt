@@ -13,6 +13,7 @@ class ActivityDetailViewModel (activity : Activity) : ViewModel(){
     val activityDate by mutableStateOf( activity.afficherDate())
     val activityPlace by mutableStateOf( activity.place.name)
     val activityImage by mutableStateOf( activity.place.urlPhoto)
+    val placeName by mutableStateOf( activity.place.name)
 
 
 
