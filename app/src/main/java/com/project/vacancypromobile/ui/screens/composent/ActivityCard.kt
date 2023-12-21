@@ -22,9 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.project.vacancypromobile.models.Activity
 import com.project.vacancypromobile.models.Place
+import com.project.vacancypromobile.ui.screens.Screen
 import com.project.vacancypromobile.viewModel.ActivityDetailViewModel
 import com.project.vacancypromobile.viewModel.composent.AddToCalendarViewModel
 import com.project.vacancypromobile.viewModel.composent.ShowItineraryViewModel
@@ -33,6 +36,7 @@ import java.util.Date
 @Composable
 fun ActivityCard(
     activityDetailViewModel: ActivityDetailViewModel = viewModel(),
+    navController: NavController,
     ) {
 
     val openAlertDialog = remember { mutableStateOf(false) }
@@ -63,9 +67,19 @@ fun ActivityCard(
                 Text(text = activityDetailViewModel.activityPlace, color = Color.Yellow)
             }
             Column(){
-                Icon(Icons.Default.DateRange, contentDescription = "Ajouter au calendrier", Modifier.clickable {  openAlertDialog.value = true }.size(30.dp))
-                Icon(Icons.Default.Place, contentDescription = "Itinéraire" , Modifier.clickable {  openItineraryDialog.value = true }.size(30.dp))
-                Icon(Icons.Default.Edit, contentDescription = "Itinéraire" , Modifier.clickable {  openEditDialog.value = true }.size(30.dp))
+                Icon(Icons.Default.DateRange, contentDescription = "Ajouter au calendrier",
+                    Modifier
+                        .clickable { openAlertDialog.value = true }
+                        .size(30.dp))
+                Icon(Icons.Default.Place, contentDescription = "Itinéraire" ,
+                    Modifier
+                        .clickable { openItineraryDialog.value = true }
+                        .size(30.dp))
+                //Icon(Icons.Default.Edit, contentDescription = "Itinéraire" , Modifier.clickable {  openEditDialog.value = true }.size(30.dp))
+                Icon(Icons.Default.Edit, contentDescription = "Itinéraire" ,
+                    Modifier
+                        .clickable { navController.navigate(Screen.ModifyActivity.route + "/${activityDetailViewModel.activity.id}") }
+                        .size(30.dp))
             }
         }
 
@@ -101,7 +115,9 @@ fun ActivityCard(
 @Composable
 @Preview
 fun ActivityCardPreview() {
-    ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity = Activity(1,"name","Ceci est une tres lognue description pour tester mon affichage ",Date(),Date(),
-        Place("Ca c'est big cet endroit","","AWU5eFiPT2gyC49KbvhLd7QvNW9aRTZNhciegQsbu0B6A4Ybiu_o_CODKq4rcYeSdAJCxSYk-j74yLa6ck8JL3OzrbMibzERPJ1j1xNhMdu2UG7M2_GuzieoPuyEItExKE-wDSsg0VVSfsHuY1Zho2piZgu-l-qJEuSIBi6hitY0GBCn7BHm")
-    )))
+    ActivityCard(
+        activityDetailViewModel = ActivityDetailViewModel(activity = Activity(1,"name","Ceci est une tres lognue description pour tester mon affichage ",Date(),Date(),
+            Place("Ca c'est big cet endroit","","AWU5eFiPT2gyC49KbvhLd7QvNW9aRTZNhciegQsbu0B6A4Ybiu_o_CODKq4rcYeSdAJCxSYk-j74yLa6ck8JL3OzrbMibzERPJ1j1xNhMdu2UG7M2_GuzieoPuyEItExKE-wDSsg0VVSfsHuY1Zho2piZgu-l-qJEuSIBi6hitY0GBCn7BHm")
+        )), navController = rememberNavController()
+    )
 }

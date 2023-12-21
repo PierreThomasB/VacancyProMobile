@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.project.vacancypromobile.ui.screens.Screen
+import com.project.vacancypromobile.viewModel.EditActivityViewModel
 import com.project.vacancypromobile.viewModel.HomeViewModel
 import com.project.vacancypromobile.viewModel.LoginViewModel
 import com.project.vacancypromobile.viewModel.MainViewModel
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
     private val homeViewModel: HomeViewModel by viewModels()
     private val periodDetailViewModel: PeriodDetailViewModel by viewModels()
     private val newActivityViewModel: NewActivityViewModel by viewModels()
+    private val editActivityViewModel: EditActivityViewModel by viewModels()
 
     private lateinit var navController: NavHostController
     private lateinit var placesClient : PlacesClient;
@@ -42,6 +44,7 @@ class MainActivity : ComponentActivity() {
                 newActivityViewModel = newActivityViewModel,
                 homeViewModel =  homeViewModel,
                 periodDetailViewModel = periodDetailViewModel,
+                editActivityViewModel = editActivityViewModel
             )
             mainViewModel.loadUser()
             val user = mainViewModel.getCurrentUser()

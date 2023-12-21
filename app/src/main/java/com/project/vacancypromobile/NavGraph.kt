@@ -10,10 +10,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.project.vacancypromobile.ui.screens.HomeScreen
 import com.project.vacancypromobile.ui.screens.LoginScreen
+import com.project.vacancypromobile.ui.screens.ModifyActivityScreen
 import com.project.vacancypromobile.ui.screens.NewActivityScreen
 import com.project.vacancypromobile.ui.screens.NewPeriodScreen
 import com.project.vacancypromobile.ui.screens.PeriodDetailsScreen
 import com.project.vacancypromobile.ui.screens.Screen
+import com.project.vacancypromobile.viewModel.EditActivityViewModel
 import com.project.vacancypromobile.viewModel.HomeViewModel
 import com.project.vacancypromobile.viewModel.LoginViewModel
 import com.project.vacancypromobile.viewModel.NewActivityViewModel
@@ -29,6 +31,7 @@ fun SetupNavGraph(
     newActivityViewModel: NewActivityViewModel,
     homeViewModel: HomeViewModel,
     periodDetailViewModel: PeriodDetailViewModel,
+    editActivityViewModel: EditActivityViewModel
 ) {
     NavHost(
         navController = navController,
@@ -61,16 +64,10 @@ fun SetupNavGraph(
                 periodId
             )
         }
-        /*navigation(
-            route = ACTIVITY_ROUTE,
-            startDestination = Screen.PeriodDetails.route
-        ) {
-            composable(route = Screen.NewActivity.route, arguments = listOf(navArgument("periodId") { type = NavType.IntType })) {
-                NewActivityScreen(
-                    newActivityViewModel,
-                    navController
-                )
-            }
-        }*/
+
+        composable(Screen.ModifyActivity.route+"/{activityId}") {backStackEntry ->
+            val activityId = backStackEntry.arguments?.getString("activityId")
+            ModifyActivityScreen(navController = navController, editActivityViewModel = editActivityViewModel, activityId = activityId!!.toInt())
+        }
     }
 }

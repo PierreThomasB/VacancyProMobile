@@ -4,6 +4,7 @@ import android.util.Log
 import com.project.vacancypromobile.models.Activity
 import com.project.vacancypromobile.services.ApiService
 import com.project.vacancypromobile.services.requests.ActivityRequest
+import com.project.vacancypromobile.services.requests.EditActivityRequest
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import javax.inject.Inject
@@ -48,14 +49,22 @@ class ActivityRepository @Inject constructor(private val apiService: ApiService)
         return resp.isSuccessful
     }
 
-    suspend fun updateActivity(request: ActivityRequest): Boolean {
-        val resp = apiService.updateActivity(request)
+
+
+    suspend fun updateActivity(id: Int, request: EditActivityRequest): Boolean {
+        val resp = apiService.updateActivity(id, request)
+        activities[id]!!.name = request.name
+        activities[id]!!.description = request.description
         if (resp.isSuccessful && resp.body() != null) {
             Log.d("Period", "Period updated")
         } else {
             Log.d("Period", "Period not updated")
         }
         return resp.isSuccessful
+    }
+
+    fun getActivityDetails(id: Int): Activity {
+        return activities[id]!!
     }
 
 

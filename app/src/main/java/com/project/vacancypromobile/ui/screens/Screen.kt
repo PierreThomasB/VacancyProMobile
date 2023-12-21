@@ -11,5 +11,6 @@ sealed class Screen(val route: String) {
     data object NewActivity: Screen(route = "new_activity_screen/{periodId}");
     data object Period : Screen(route = "period_screen");
     data object PeriodDetails : Screen(route = "period_details_screen/{periodId}");
+    data object ModifyActivity : Screen(route = "activity_modify_screen/{acitivtyId}");
 
 }

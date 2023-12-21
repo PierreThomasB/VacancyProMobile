@@ -205,7 +205,7 @@ fun PeriodDetailsScreen(
             if(periodDetailViewModel.activities.isEmpty())
                 Text("Pas encore d'activité , Qu'attendez vous ? " , modifier = Modifier.align(Alignment.CenterHorizontally) , fontSize = 20.sp)
             for (activity in periodDetailViewModel.activities) {
-                ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity) )
+                ActivityCard(activityDetailViewModel = ActivityDetailViewModel(activity), navController = navController )
             }
         }
         when {
