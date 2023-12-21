@@ -92,7 +92,7 @@ fun PeriodDetailsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     if (!addUserMessage.isNullOrEmpty()) {
         LaunchedEffect(addUserMessage) {
-            snackbarHostState.showSnackbar(message = addUserMessage!!, duration = SnackbarDuration.Short)
+            snackbarHostState.showSnackbar(message = addUserMessage!!, duration = SnackbarDuration.Long)
         }
     }
     DisposableEffect(Unit) {
