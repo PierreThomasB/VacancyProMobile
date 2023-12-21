@@ -13,7 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.project.vacancypromobile.models.User
+import com.project.vacancypromobile.ui.screens.Screen
 import com.project.vacancypromobile.viewModel.NewActivityViewModel
 import com.project.vacancypromobile.viewModel.NewPeriodViewModel
 import com.project.vacancypromobile.viewModel.PeriodDetailViewModel
@@ -91,6 +94,7 @@ fun UserAutocompleteTextField(
     var text by remember { mutableStateOf("") }
     //var isVisible by remember { mutableStateOf(false) }
     var isDropdownExpanded by remember { mutableStateOf(false) }
+
     Column(modifier = modifier) {
         OutlinedTextField(
             modifier = modifier.onFocusChanged { focusState ->

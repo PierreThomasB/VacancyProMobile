@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.project.vacancypromobile.ui.screens.Screen
 
 sealed class BottomNavItem(val route: String, val icon:ImageVector, val label: String) {
-    data object Home : BottomNavItem(Screen.Home.route, Icons.Filled.Home, "Home")
-    data object NewPeriod : BottomNavItem(Screen.CreatePeriod.route, Icons.Filled.AddCircle, "New Period")
+    data object Home : BottomNavItem(Screen.Home.route, Icons.Filled.Home, "Accueil")
+    data object NewPeriod : BottomNavItem(Screen.CreatePeriod.route, Icons.Filled.AddCircle, "Ajouter une période")
 
 }

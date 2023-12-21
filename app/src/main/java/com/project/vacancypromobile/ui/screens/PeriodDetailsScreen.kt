@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Send
@@ -33,6 +34,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -100,6 +102,7 @@ fun PeriodDetailsScreen(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -116,6 +119,13 @@ fun PeriodDetailsScreen(
                 ),
                 title = {
                     Row() {
+                        Icon(
+                            Icons.Default.Home,
+                            contentDescription = "Home",
+                            modifier = Modifier
+                                .clickable { navController.navigate(Screen.Home.route) }
+                                .size(30.dp))
+                        Spacer(modifier = Modifier.width(80.dp))
                         Icon(
                             Icons.Default.Delete,
                             contentDescription = "Delete",

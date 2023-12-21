@@ -85,7 +85,6 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavHos
                     Column(
                         modifier = Modifier.padding(20.dp),
                     ) {
-                        Text(text = homeViewModel.getUser().username)
                         Button(onClick = { homeViewModel.logout(activity)  }) {
                             Row {
                                 Icon(Icons.Outlined.Lock, contentDescription = "Localized description")

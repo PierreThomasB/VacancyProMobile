@@ -150,12 +150,12 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
 
     suspend fun addUserToPeriod() {
         if (userIdToAdd.isNotEmpty()) {
-            periodRepository.addUserToPeriod(userIdToAdd, period.id)
-            /*if (resp) {
+            val resp = periodRepository.addUserToPeriod(userIdToAdd, period.id)
+            if (resp) {
                 _addUserMessage.value = "Utilisateur ajouté"
             } else {
                 _addUserMessage.value = "Utilisateur non ajouté"
-            }*/
+            }
         }
 
     }

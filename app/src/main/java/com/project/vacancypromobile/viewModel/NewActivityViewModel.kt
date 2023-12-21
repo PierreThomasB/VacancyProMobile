@@ -27,7 +27,7 @@ class NewActivityViewModel @Inject constructor(
     private val activityRepository: ActivityRepository,
     private val application: Application
 ) : ViewModel() {
-    private var periodRequest: PeriodRequest? = null
+    var periodRequest: PeriodRequest? = null
     private val _newActivityMessage = MutableLiveData<String>()
     val newActivityMessage: MutableLiveData<String> get() = _newActivityMessage
 
@@ -150,6 +150,18 @@ class NewActivityViewModel @Inject constructor(
         }
         if (activityEndDate.isEmpty()) {
             _newActivityMessage.value = "Date de fin manquante"
+            return false
+        }
+        if (activityStartDate > activityEndDate) {
+            _newActivityMessage.value = "La date de début doit être inférieure à la date de fin"
+            return false
+        }
+        if (activityStartDate < periodRequest!!.beginDate) {
+            _newActivityMessage.value = "La date de début doit être supérieure à la date de début de la période"
+            return false
+        }
+        if (activityEndDate > periodRequest!!.endDate) {
+            _newActivityMessage.value = "La date de fin doit être inférieure à la date de fin de la période"
             return false
         }
 

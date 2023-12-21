@@ -121,6 +121,7 @@ fun NewPeriodScreen(
                             runBlocking {
                                 newPeriodViewModel.createPeriod()
                             }
+                            if (newPeriodViewModel.newPeriodSuccess) navController.navigate(Screen.Home.route)
                         },
                         modifier = Modifier
                             .fillMaxWidth()

@@ -113,6 +113,7 @@ fun NewActivityScreen(
                             runBlocking {
                                 newActivityViewModel.createActivity(periodId)
                             }
+                            if(newActivityViewModel.newActivitySuccess) navController.navigate("period_details_screen/$periodId")
                         },
                         modifier = Modifier
                             .fillMaxWidth()
