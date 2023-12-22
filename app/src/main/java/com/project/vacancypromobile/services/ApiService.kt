@@ -47,7 +47,7 @@ interface ApiService {
     abstract suspend  fun deletePeriod(@Query("id")id: Int) : Response<Any>
 
     /** METEO **/
-    @GET("Meteo/GetMeteo")
+    @GET("Meteo/Meteo")
     suspend fun getMeteoInfo(@Query("lieu") ville : String) : Response<Any>
 
     /** ACTIVITIES **/

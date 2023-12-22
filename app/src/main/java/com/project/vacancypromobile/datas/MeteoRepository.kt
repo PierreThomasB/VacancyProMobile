@@ -24,8 +24,10 @@ class MeteoRepository @Inject constructor(private  val apiService: ApiService) :
 
             val name = location!!["name"].toString();
             val temperature = current!!["temperature"].toString()
+            var url = urlPhoto?.getOrNull(0).toString()
+            url =  url.substring(1, url.length - 1)
 
-            return Meteo(name ,temperature , description?.getOrNull(0).toString(), urlPhoto?.getOrNull(0).toString() );
+            return Meteo(name ,temperature , description?.getOrNull(0).toString(), url );
         }
         return null;
     }

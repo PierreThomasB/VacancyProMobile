@@ -64,7 +64,7 @@ fun ActivityCard(
                     text = activityDetailViewModel.activityDate ,
                     color = Color.Gray
                 )
-                Text(text = activityDetailViewModel.activityPlace, color = Color.Yellow)
+                Text(text = activityDetailViewModel.activityPlace, color = Color.Blue)
             }
             Column(){
                 Icon(Icons.Default.DateRange, contentDescription = "Ajouter au calendrier",
