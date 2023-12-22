@@ -37,7 +37,7 @@ class ChatRepository  @Inject constructor(private  val api: ApiService ): Serial
             val response = resp.body();
             val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
             for(messageRequ in response!!) {
-               chat[messageRequ.id] = (Message(messageRequ.id, messageRequ.message, format.parse(messageRequ.date), messageRequ.user?.userName, messageRequ.channel))
+               chat[messageRequ.id] = (Message(messageRequ.id, messageRequ.message, format.parse(messageRequ.date), messageRequ.userName, messageRequ.channel))
             }
             return chat.values.toList();
         }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
@@ -37,7 +36,6 @@ fun ActivityCard(
 
     val openAlertDialog = remember { mutableStateOf(false) }
     val openItineraryDialog = remember { mutableStateOf(false) }
-    val openEditDialog = remember { mutableStateOf(false) }
     OutlinedCard(
         modifier =
         Modifier
@@ -65,7 +63,6 @@ fun ActivityCard(
             Column(){
                 Icon(Icons.Default.DateRange, contentDescription = "Ajouter au calendrier", Modifier.clickable {  openAlertDialog.value = true }.size(30.dp))
                 Icon(Icons.Default.Place, contentDescription = "Itinéraire" , Modifier.clickable {  openItineraryDialog.value = true }.size(30.dp))
-                Icon(Icons.Default.Edit, contentDescription = "Itinéraire" , Modifier.clickable {  openEditDialog.value = true }.size(30.dp))
             }
         }
 
@@ -84,17 +81,7 @@ fun ActivityCard(
                 showItineraryViewModel = ShowItineraryViewModel(activityDetailViewModel.placeName)
             )
     }
-    when{
-        openEditDialog.value ->
-            ShowEditComp(
-                onConfirmed = {  },
-                onDismissRequest = { openEditDialog.value = false   },
-                beginDate = activityDetailViewModel.activityDate,
-                endDate = activityDetailViewModel.activityDate
-            )
 
-
-    }
 }
 
 

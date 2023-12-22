@@ -19,6 +19,6 @@ data class ChatRequest (
     val channel: String = "null",
     @SerializedName("date")
     val date: String = "null",
-    @SerializedName("user")
-    val user: ChatUserRequest? = null,
+    @SerializedName("userName")
+    val userName: String? = null,
     )

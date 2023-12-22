@@ -62,7 +62,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
         val channel = pusher!!.subscribe("channel_"+period.id)
         channel.bind("my-event") { event ->
             val data = Gson().fromJson(event.data , ChatReceiveRequest::class.java);
-            val message = Message(id = data.id , message = data.message , channel = data.channel , userName = "Pipi Thomas" , date = data.date )
+            val message = Message(id = data.id , message = data.message , channel = data.channel , userName = data.userName , date = data.date )
             if(chatRepository.addReceivedMessage(message)) {
                 messages = messages + message
             }
@@ -82,6 +82,7 @@ class PeriodDetailViewModel @Inject constructor(private val activityRepository: 
     var meteo by mutableStateOf(Meteo("","","",""))
     var activities by mutableStateOf(emptyList<Activity>())
     var period by mutableStateOf(Period(0,"","", Date(),Date(), Place("0","",""), emptyList()))
+
     var messages by mutableStateOf(emptyList<Message>())
     var tempMessage by mutableStateOf("")
 

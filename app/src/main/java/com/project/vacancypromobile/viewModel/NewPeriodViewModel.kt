@@ -14,11 +14,10 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.project.vacancypromobile.datas.PeriodRepository
-import com.project.vacancypromobile.models.Period
 import com.project.vacancypromobile.models.Place
-import dagger.hilt.android.lifecycle.HiltViewModel
 import com.project.vacancypromobile.models.User
 import com.project.vacancypromobile.services.requests.PeriodRequest
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -91,6 +90,7 @@ class NewPeriodViewModel @Inject constructor(
     }
 
     private fun verifyData(): Boolean {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
         if (periodName.isEmpty()) {
             _newPeriodMessage.value = "Nom manquant"
             return false
@@ -109,6 +109,16 @@ class NewPeriodViewModel @Inject constructor(
         }
         if (periodEndDate.isEmpty()) {
             _newPeriodMessage.value = "Date de fin manquante"
+            return false
+        }
+        val dateDebut : Date = dateFormat.parse(periodStartDate)
+        val dateFin = dateFormat.parse(periodEndDate)
+        if(dateDebut.after(dateFin)){
+            _newPeriodMessage.value = "La date de début doit être avant la date de fin"
+            return false
+        }
+        if(Date().after(dateDebut)){
+            _newPeriodMessage.value = "La date de début doit être après la date d'aujourd'hui"
             return false
         }
 

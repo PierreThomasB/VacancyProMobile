@@ -11,7 +11,9 @@ data class ChatReceiveRequest (
     @SerializedName("Date")
     val date : Date,
     @SerializedName("Channel")
-    val channel : String
+    val channel : String,
+    @SerializedName("UserName")
+    val userName : String
 
 
     )
